@@ -8,10 +8,18 @@ import javax.swing.*;
 public class RequestPage {
     private JTextField titleTextField;
 
-    private JPanel panel1;
+    private JPanel mainPanel;
     private JPanel inputPanel;
     private JRadioButton maleRdBtn;
     private JRadioButton femaleRdBtn;
     private JComboBox birthYearCBox;
     private JComboBox birthMonthCBox;
+    private JComboBox birthDayCBox;
+    private JFormattedTextField birthWeightTxt;
+    private JFormattedTextField heightTxt;
+    private JFormattedTextField weightTxt;
+    private JFormattedTextField headTxt;
+    private JFormattedTextField bmiTxt;
+    private JButton 퍼센타일보기Button;
+    private JPanel outputPanel;
 }
