@@ -77,7 +77,7 @@
               </component>
               <grid id="fb313" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="3">
                 <constraints>
-                  <grid row="1" column="2" row-span="1" col-span="2" vsize-policy="3" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                  <grid row="1" column="2" row-span="1" col-span="3" vsize-policy="3" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                   <gridbag weightx="1.0" weighty="1.0"/>
                 </constraints>
                 <properties/>
@@ -189,7 +189,7 @@
               </component>
               <grid id="d8090" layout-manager="GridBagLayout">
                 <constraints>
-                  <grid row="2" column="2" row-span="1" col-span="2" vsize-policy="3" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                  <grid row="2" column="2" row-span="1" col-span="3" vsize-policy="3" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                   <gridbag weightx="1.0" weighty="1.0"/>
                 </constraints>
                 <properties/>
@@ -326,48 +326,16 @@
               </grid>
               <component id="6a8a3" class="javax.swing.JButton" binding="viewBtn">
                 <constraints>
-                  <grid row="3" column="2" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                  <grid row="3" column="2" row-span="1" col-span="3" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                   <gridbag weightx="1.0" weighty="0.0"/>
                 </constraints>
                 <properties>
                   <text value="&amp;퍼센타일 보기"/>
                 </properties>
               </component>
-              <grid id="2f27e" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="2">
-                <constraints>
-                  <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
-                  <gridbag weightx="0.0" weighty="0.0"/>
-                </constraints>
-                <properties/>
-                <border type="none"/>
-                <children>
-                  <component id="78ab1" class="javax.swing.JLabel">
-                    <constraints/>
-                    <properties>
-                      <horizontalAlignment value="0"/>
-                      <text value="출생시 체중"/>
-                    </properties>
-                  </component>
-                  <component id="242b7" class="javax.swing.JFormattedTextField" binding="birthWeightTxt">
-                    <constraints/>
-                    <properties>
-                      <preferredSize width="80" height="23"/>
-                    </properties>
-                  </component>
-                  <component id="2dca2" class="javax.swing.JLabel">
-                    <constraints/>
-                    <properties>
-                      <enabled value="false"/>
-                      <horizontalAlignment value="2"/>
-                      <horizontalTextPosition value="2"/>
-                      <text value=" kg"/>
-                    </properties>
-                  </component>
-                </children>
-              </grid>
               <vspacer id="baada">
                 <constraints>
-                  <grid row="4" column="2" row-span="1" col-span="1" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+                  <grid row="4" column="2" row-span="1" col-span="2" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
                   <gridbag weightx="0.0" weighty="0.0"/>
                 </constraints>
               </vspacer>
@@ -379,10 +347,40 @@
               </hspacer>
               <hspacer id="2bb16">
                 <constraints>
-                  <grid row="2" column="4" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                  <grid row="2" column="5" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                   <gridbag weightx="0.0" weighty="0.0"/>
                 </constraints>
               </hspacer>
+              <grid id="7412b" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
+                <constraints>
+                  <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                  <gridbag weightx="0.0" weighty="0.0"/>
+                </constraints>
+                <properties>
+                  <minimumSize width="240" height="40"/>
+                </properties>
+                <border type="none"/>
+                <children>
+                  <component id="ff626" class="javax.swing.JLabel">
+                    <constraints/>
+                    <properties>
+                      <text value="출생시 체중"/>
+                    </properties>
+                  </component>
+                  <component id="3eb28" class="javax.swing.JFormattedTextField" binding="birthWeightTxt">
+                    <constraints/>
+                    <properties>
+                      <preferredSize width="80" height="23"/>
+                    </properties>
+                  </component>
+                  <component id="52747" class="javax.swing.JLabel">
+                    <constraints/>
+                    <properties>
+                      <text value="kg"/>
+                    </properties>
+                  </component>
+                </children>
+              </grid>
             </children>
           </grid>
         </children>
