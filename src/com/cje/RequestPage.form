@@ -213,6 +213,7 @@
                     </constraints>
                     <properties>
                       <columns value="5"/>
+                      <minimumSize width="30" height="23"/>
                     </properties>
                   </component>
                   <component id="1e7c7" class="javax.swing.JLabel">
@@ -242,6 +243,7 @@
                     </constraints>
                     <properties>
                       <columns value="5"/>
+                      <minimumSize width="30" height="23"/>
                     </properties>
                   </component>
                   <component id="b90c9" class="javax.swing.JLabel">
@@ -271,6 +273,7 @@
                     </constraints>
                     <properties>
                       <columns value="5"/>
+                      <minimumSize width="30" height="23"/>
                       <text value=""/>
                     </properties>
                   </component>
@@ -371,6 +374,8 @@
                     <constraints/>
                     <properties>
                       <preferredSize width="80" height="23"/>
+                      <text value=""/>
+                      <verifyInputWhenFocusTarget value="false"/>
                     </properties>
                   </component>
                   <component id="52747" class="javax.swing.JLabel">
