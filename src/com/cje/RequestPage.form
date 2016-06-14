@@ -50,6 +50,7 @@
                       <gridbag weightx="0.0" weighty="0.0"/>
                     </constraints>
                     <properties>
+                      <minimumSize width="54" height="19"/>
                       <text value="남"/>
                     </properties>
                   </component>
@@ -89,7 +90,9 @@
                   <component id="dd120" class="javax.swing.JComboBox" binding="birthYearCBox">
                     <constraints/>
                     <properties>
-                      <model/>
+                      <model>
+                        <item value="Year"/>
+                      </model>
                     </properties>
                   </component>
                   <component id="ae57b" class="javax.swing.JLabel">
@@ -106,6 +109,7 @@
                     <properties>
                       <minimumSize width="60" height="31"/>
                       <model>
+                        <item value="Month"/>
                         <item value="1"/>
                         <item value="2"/>
                         <item value="3"/>
@@ -135,6 +139,7 @@
                     <properties>
                       <minimumSize width="60" height="31"/>
                       <model>
+                        <item value="Day"/>
                         <item value="1"/>
                         <item value="2"/>
                         <item value="3"/>
@@ -179,7 +184,7 @@
               </grid>
               <component id="1cd67" class="javax.swing.JLabel">
                 <constraints>
-                  <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+                  <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
                   <gridbag weightx="0.0" weighty="1.0"/>
                 </constraints>
                 <properties>
@@ -189,7 +194,7 @@
               </component>
               <grid id="d8090" layout-manager="GridBagLayout">
                 <constraints>
-                  <grid row="2" column="2" row-span="1" col-span="3" vsize-policy="3" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                  <grid row="3" column="2" row-span="1" col-span="3" vsize-policy="3" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                   <gridbag weightx="1.0" weighty="1.0"/>
                 </constraints>
                 <properties/>
@@ -304,6 +309,7 @@
                     </constraints>
                     <properties>
                       <columns value="5"/>
+                      <minimumSize width="74" height="23"/>
                       <text value=""/>
                     </properties>
                   </component>
@@ -329,7 +335,7 @@
               </grid>
               <component id="6a8a3" class="javax.swing.JButton" binding="viewBtn">
                 <constraints>
-                  <grid row="3" column="2" row-span="1" col-span="3" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                  <grid row="4" column="2" row-span="1" col-span="3" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                   <gridbag weightx="1.0" weighty="0.0"/>
                 </constraints>
                 <properties>
@@ -338,19 +344,19 @@
               </component>
               <vspacer id="baada">
                 <constraints>
-                  <grid row="4" column="2" row-span="1" col-span="2" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+                  <grid row="5" column="2" row-span="1" col-span="2" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
                   <gridbag weightx="0.0" weighty="0.0"/>
                 </constraints>
               </vspacer>
               <hspacer id="15be5">
                 <constraints>
-                  <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                  <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                   <gridbag weightx="0.0" weighty="0.0"/>
                 </constraints>
               </hspacer>
               <hspacer id="2bb16">
                 <constraints>
-                  <grid row="2" column="5" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                  <grid row="3" column="5" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                   <gridbag weightx="0.0" weighty="0.0"/>
                 </constraints>
               </hspacer>
@@ -373,9 +379,11 @@
                   <component id="3eb28" class="javax.swing.JFormattedTextField" binding="birthWeightTxt">
                     <constraints/>
                     <properties>
-                      <preferredSize width="80" height="23"/>
+                      <columns value="6"/>
+                      <editable value="true"/>
+                      <preferredSize width="88" height="23"/>
                       <text value=""/>
-                      <verifyInputWhenFocusTarget value="false"/>
+                      <verifyInputWhenFocusTarget value="true"/>
                     </properties>
                   </component>
                   <component id="52747" class="javax.swing.JLabel">
@@ -386,6 +394,37 @@
                   </component>
                 </children>
               </grid>
+              <component id="a240b" class="javax.swing.JLabel">
+                <constraints>
+                  <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                  <gridbag weightx="0.0" weighty="0.0"/>
+                </constraints>
+                <properties>
+                  <horizontalAlignment value="0"/>
+                  <horizontalTextPosition value="0"/>
+                  <text value="나이"/>
+                </properties>
+              </component>
+              <component id="5781c" class="javax.swing.JLabel" binding="ageTxt">
+                <constraints>
+                  <grid row="2" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                  <gridbag weightx="0.0" weighty="0.0"/>
+                </constraints>
+                <properties>
+                  <horizontalAlignment value="0"/>
+                  <horizontalTextPosition value="0"/>
+                  <text value=""/>
+                </properties>
+              </component>
+              <component id="be433" class="javax.swing.JLabel" binding="todayTxt">
+                <constraints>
+                  <grid row="2" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+                  <gridbag weightx="0.0" weighty="0.0"/>
+                </constraints>
+                <properties>
+                  <text value=""/>
+                </properties>
+              </component>
             </children>
           </grid>
         </children>
@@ -402,4 +441,10 @@
       </component>
     </children>
   </grid>
+  <buttonGroups>
+    <group name="genderRdBtnGroup">
+      <member id="92afd"/>
+      <member id="aaaac"/>
+    </group>
+  </buttonGroups>
 </form>
