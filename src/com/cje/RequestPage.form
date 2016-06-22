@@ -78,7 +78,7 @@
               </component>
               <grid id="fb313" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="3">
                 <constraints>
-                  <grid row="1" column="2" row-span="1" col-span="3" vsize-policy="3" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                  <grid row="1" column="2" row-span="1" col-span="6" vsize-policy="3" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                   <gridbag weightx="1.0" weighty="1.0"/>
                 </constraints>
                 <properties/>
@@ -115,7 +115,7 @@
               </component>
               <grid id="d8090" layout-manager="GridBagLayout">
                 <constraints>
-                  <grid row="3" column="2" row-span="1" col-span="3" vsize-policy="3" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                  <grid row="3" column="2" row-span="1" col-span="6" vsize-policy="3" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                   <gridbag weightx="1.0" weighty="1.0"/>
                 </constraints>
                 <properties/>
@@ -256,16 +256,17 @@
               </grid>
               <component id="6a8a3" class="javax.swing.JButton" binding="viewBtn">
                 <constraints>
-                  <grid row="4" column="2" row-span="1" col-span="3" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                  <grid row="4" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                   <gridbag weightx="1.0" weighty="0.0"/>
                 </constraints>
                 <properties>
+                  <margin top="3" left="18" bottom="3" right="18"/>
                   <text value="&amp;퍼센타일 보기"/>
                 </properties>
               </component>
               <vspacer id="baada">
                 <constraints>
-                  <grid row="5" column="2" row-span="1" col-span="2" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+                  <grid row="5" column="2" row-span="1" col-span="5" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
                   <gridbag weightx="0.0" weighty="0.0"/>
                 </constraints>
               </vspacer>
@@ -277,13 +278,13 @@
               </hspacer>
               <hspacer id="2bb16">
                 <constraints>
-                  <grid row="3" column="5" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                  <grid row="3" column="8" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                   <gridbag weightx="0.0" weighty="0.0"/>
                 </constraints>
               </hspacer>
               <grid id="7412b" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
                 <constraints>
-                  <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                  <grid row="0" column="4" row-span="1" col-span="3" vsize-policy="3" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                   <gridbag weightx="0.0" weighty="0.0"/>
                 </constraints>
                 <properties>
@@ -339,13 +340,45 @@
               </component>
               <component id="be433" class="javax.swing.JLabel" binding="todayTxt">
                 <constraints>
-                  <grid row="2" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+                  <grid row="2" column="4" row-span="1" col-span="3" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
                   <gridbag weightx="0.0" weighty="0.0"/>
                 </constraints>
                 <properties>
                   <text value=""/>
                 </properties>
               </component>
+              <component id="21c6" class="javax.swing.JButton" binding="resetBtn">
+                <constraints>
+                  <grid row="4" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                  <gridbag weightx="0.0" weighty="0.0"/>
+                </constraints>
+                <properties>
+                  <margin top="3" left="18" bottom="3" right="18"/>
+                  <text value="초기화"/>
+                </properties>
+              </component>
+              <component id="68a6" class="javax.swing.JButton" binding="exitBtn">
+                <constraints>
+                  <grid row="4" column="6" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                  <gridbag weightx="0.0" weighty="0.0"/>
+                </constraints>
+                <properties>
+                  <margin top="3" left="18" bottom="3" right="18"/>
+                  <text value="프로그램 종료"/>
+                </properties>
+              </component>
+              <hspacer id="91bf7">
+                <constraints>
+                  <grid row="4" column="3" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                  <gridbag weightx="0.0" weighty="0.0"/>
+                </constraints>
+              </hspacer>
+              <hspacer id="f59">
+                <constraints>
+                  <grid row="4" column="5" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                  <gridbag weightx="0.0" weighty="0.0"/>
+                </constraints>
+              </hspacer>
             </children>
           </grid>
         </children>

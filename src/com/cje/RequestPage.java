@@ -12,6 +12,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.logging.Level;
 
 /**
  * Created by bbybby on 6/8/2016.
@@ -33,28 +34,53 @@ public class RequestPage extends JFrame{
     private JLabel ageTxt;
     private JLabel todayTxt;
     private JFormattedTextField birthDateTxt;
+    private JButton resetBtn;
+    private JButton exitBtn;
     private JLabel ageLabel;
 
     private DataManager dm;
-    private Params.GENDER gender = Params.GENDER.NONE;
+    private Params.Gender gender = Params.Gender.NONE;
     private int birthYear;
     private int birthMonth;
     private int birthDay;
-
     private int cYear;  // current Year
     private int cMonth;
     private int cDay;
 
-    private int ageByMonth;
+    private float height;
+    private float weight;
+    private float head;
+    private float bmi;
+
+    private int ageByDay;
 
     boolean isDataLoaded;
 
-    public RequestPage() {
-        super("Growth Indicator");
+    // Initialize member variables and load data from files
+    public void init() {
+        birthYear = -1;
+        birthMonth = -1;
+        birthDay = -1;
+        ageByDay = -1;
 
-        // Initialize member variables
+        height = -1;
+        weight = -1;
+        head = -1;
+        bmi = -1;
+
+        // Load Data
         dm = new DataManager();
         isDataLoaded = false;
+
+        isDataLoaded = dm.loadData();
+        if(!isDataLoaded) {
+            Utils.showMessage("Data loading failed!");
+            Utils.LOGGER.log(Level.SEVERE, "File reading failed.");
+        }
+    }
+
+    public RequestPage() {
+        super("Growth Indicator");
 
         Calendar cal = Calendar.getInstance();
         cYear = cal.get(Calendar.YEAR);
@@ -62,42 +88,88 @@ public class RequestPage extends JFrame{
         cDay = cal.get(Calendar.DAY_OF_MONTH);
         todayTxt.setText("[기준일] "+cYear+"년 "+cMonth+"월 "+cDay+"일");
 
-        birthYear = -1;
-        birthMonth = -1;
-        birthDay = -1;
-        ageByMonth = -1;
-
-
         setContentPane(mainPanel);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         pack();
         setLocationRelativeTo(null);
 
+        init();
 
         viewBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-//                JOptionPane.showMessageDialog(null, "SSS");
+                if(!isDataLoaded) {
+                    Utils.showMessage("파일이 정상적으로 로딩되지 않았습니다.");
+                    return;
+                }
 
                 // Check Gender
-                if(maleRdBtn.isSelected()) gender = Params.GENDER.MALE;
-                else if(femaleRdBtn.isSelected()) gender = Params.GENDER.FEMALE;
+                if(maleRdBtn.isSelected()) gender = Params.Gender.MALE;
+                else if(femaleRdBtn.isSelected()) gender = Params.Gender.FEMALE;
                 else {
                     Utils.showMessage("Please select gender.");
                     return;
                 }
 
+                // Check Weight of Birth
+                if(birthWeightTxt.getText().length()!=0) {
+                    if(!Utils.isActualNumber(birthWeightTxt.getText())) {
+                        Utils.showMessage("Please input number correctly");
+                        birthWeightTxt.requestFocus();
+                        return;
+                    }
+                }
+
                 // Check Date of Birth
-                if(ageByMonth<0) {
+                if(ageByDay<0) {
                     Utils.showMessage("Please input date of birth correctly.");
                     birthDateTxt.requestFocus();
                     return;
                 }
 
-                // Init DataManager component
-                if(!isDataLoaded) {
-                    boolean bRes = dm.loadData();
+                // Check Height value
+                if(heightTxt.getText().length()>0) {
+                   if(!Utils.isActualNumber(heightTxt.getText())) {
+                       Utils.showMessage("Please input number correctly");
+                       heightTxt.requestFocus();
+                       return;
+                   }
                 }
+
+                // Check Weight value
+                if(weightTxt.getText().length()>0) {
+                    if(!Utils.isActualNumber(weightTxt.getText())) {
+                        Utils.showMessage("Please input number correctly");
+                        weightTxt.requestFocus();
+                        return;
+                    }
+                }
+
+                // Check the girth of Head value
+                if(headTxt.getText().length()>0) {
+                    if(!Utils.isActualNumber(headTxt.getText())) {
+                        Utils.showMessage("Please input number correctly");
+                        headTxt.requestFocus();
+                        return;
+                    }
+                }
+
+                // Check BMI value
+                if(bmiTxt.getText().length()>0) {
+                    if(!Utils.isActualNumber(bmiTxt.getText())) {
+                        Utils.showMessage("Please input number correctly");
+                        bmiTxt.requestFocus();
+                        return;
+                    }
+                }
+
+
+                //
+                /*
+                GrowthInfo gi = dm.getGrowthInfo(ageByDay);
+                Utils.log("Age:"+ ageByDay/30 +", L:"+gi.getL()+", M:"+gi.getM()+", S:"+gi.getS()+
+                    ", "+gi.getP3());
+                    */
             }
         });
 
@@ -134,19 +206,21 @@ public class RequestPage extends JFrame{
                 }
 
                 if(Utils.isValidDate(birthYear, birthMonth, birthDay)) {
-                    int days = Utils.getDayBetweenDates(birthYear, birthMonth, birthDay, cYear, cMonth, cDay);
-                    if(days<0) {
+                    ageByDay = Utils.getDayBetweenDates(birthYear, birthMonth, birthDay, cYear, cMonth, cDay);
+                    if(ageByDay<0) {
                         Utils.showMessage("The Date should be earlier than today");
                         birthDateTxt.requestFocus();
                         return;
                     }
-                    ageByMonth = days/30;
-                    String label = ageByMonth  + "개월";
-                    if(ageByMonth>12) {
-                        int years = ageByMonth/12;
-                        int months = ageByMonth%12;
-                        label += "  ["+years+"년 "+months+"개월]";
-                    }
+                    int months = ageByDay/30;
+                    int years = months/12;
+                    int rest_months = months%12;
+                    int rest_days = ageByDay%30;
+                    String label = months  + "개월   [ ";
+                    if(years>0) label += years+"년 ";
+                    if(rest_months>0) label += rest_months+"개월";
+                    label += " "+rest_days+"일 ]";
+
                     ageTxt.setText(label);
                 }
                 else {
@@ -175,6 +249,76 @@ public class RequestPage extends JFrame{
             @Override
             public void keyTyped(KeyEvent e) {
                 super.keyTyped(e);
+                if(weightTxt.getText().length()>=Params.MAX_INPUT_LENGTH) {
+                    e.consume();
+                    return;
+                }
+
+                if(!Utils.isDecimalInput(e.getKeyChar())) {
+                    getToolkit().beep();
+                    e.consume();
+                }
+            }
+        });
+        headTxt.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                super.keyTyped(e);
+                if(headTxt.getText().length()>=Params.MAX_INPUT_LENGTH) {
+                    e.consume();
+                    return;
+                }
+
+                if(!Utils.isDecimalInput(e.getKeyChar())) {
+                    getToolkit().beep();
+                    e.consume();
+                }
+            }
+        });
+        bmiTxt.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                super.keyTyped(e);
+                if(bmiTxt.getText().length()>=Params.MAX_INPUT_LENGTH) {
+                    e.consume();
+                    return;
+                }
+
+                if(!Utils.isDecimalInput(e.getKeyChar())) {
+                    getToolkit().beep();
+                    e.consume();
+                }
+            }
+        });
+
+        resetBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                    birthWeightTxt.setText("");
+                    birthDateTxt.setText("");
+                    ageTxt.setText("");
+                    heightTxt.setText("");
+                    weightTxt.setText("");
+                    headTxt.setText("");
+                    bmiTxt.setText("");
+
+                    birthYear = -1;
+                    birthMonth = -1;
+                    birthDay = -1;
+                    ageByDay = -1;
+
+                    height = -1;
+                    weight = -1;
+                    head = -1;
+                    bmi = -1;
+            }
+        });
+        exitBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(null, "프로그램을 끝내시겠습니까?","Select an Option", JOptionPane.YES_NO_OPTION)) {
+                    System.exit(0);
+                }
             }
         });
     }
