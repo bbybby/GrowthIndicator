@@ -40,15 +40,15 @@ public class DataManager {
         boolean bResult = true;
 
         for(Params.DataType data : Params.DataType.values()) {
-            Map<String, GrowthInfo> gi = readFile(data.getFileName());
-            if( (gi==null)|| (gi.size()==0) ) {
+            Map<String, GrowthInfo> map = readFile(data.getFileName());
+            if( (map==null)|| (map.size()==0) ) {
                 Utils.LOGGER.log(Level.SEVERE, "reading failure of "+data.getFileName());
                 giMap.put(data, null);
                 bResult = false;
                 break;
             }
             else {
-                giMap.put(data, gi);
+                giMap.put(data, map);
             }
         }
 
@@ -98,9 +98,9 @@ public class DataManager {
         int ageByMonth = ageByDay/30;  // By month
         float key = (float)ageByMonth - 0.5f;
         Utils.log("key:"+key);
-//        GrowthInfo gi = weight_male_Map.get(""+key);
-//        Map<String, GrowthInfo> gi = giMap.get()
-        return null;
+        Map<String, GrowthInfo> map = giMap.get(dataType);
+        GrowthInfo gi = map.get(String.valueOf(key));
+        return gi;
     }
 
     /*

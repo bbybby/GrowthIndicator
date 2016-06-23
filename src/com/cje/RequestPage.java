@@ -36,6 +36,8 @@ public class RequestPage extends JFrame{
     private JFormattedTextField birthDateTxt;
     private JButton resetBtn;
     private JButton exitBtn;
+    private JPanel resultPanel;
+    private JLabel resultTxt;
     private JLabel ageLabel;
 
     private DataManager dm;
@@ -134,6 +136,9 @@ public class RequestPage extends JFrame{
                        heightTxt.requestFocus();
                        return;
                    }
+                   else {
+                       height = Float.parseFloat(heightTxt.getText());
+                   }
                 }
 
                 // Check Weight value
@@ -142,6 +147,9 @@ public class RequestPage extends JFrame{
                         Utils.showMessage("Please input number correctly");
                         weightTxt.requestFocus();
                         return;
+                    }
+                    else {
+                        weight = Float.parseFloat(weightTxt.getText());
                     }
                 }
 
@@ -152,6 +160,9 @@ public class RequestPage extends JFrame{
                         headTxt.requestFocus();
                         return;
                     }
+                    else {
+                        head = Float.parseFloat(headTxt.getText());
+                    }
                 }
 
                 // Check BMI value
@@ -161,9 +172,12 @@ public class RequestPage extends JFrame{
                         bmiTxt.requestFocus();
                         return;
                     }
+                    else {
+                        bmi = Float.parseFloat(bmiTxt.getText());
+                    }
                 }
 
-
+                showResults();
                 //
                 /*
                 GrowthInfo gi = dm.getGrowthInfo(ageByDay);
@@ -301,6 +315,7 @@ public class RequestPage extends JFrame{
                     weightTxt.setText("");
                     headTxt.setText("");
                     bmiTxt.setText("");
+                    resultTxt.setText("");
 
                     birthYear = -1;
                     birthMonth = -1;
@@ -330,5 +345,64 @@ public class RequestPage extends JFrame{
         mf.setPlaceholderCharacter('_');
         mf.setAllowsInvalid(false);
         birthDateTxt = new JFormattedTextField(mf);
+    }
+
+    private void showResults() {
+        Params.DataType dataType;
+        //resultTxt.setText("[입력에 대한 결과]");
+        String str = "<html>[입력에 대한 결과]";
+
+        if(height>0) {
+            if(gender==Params.Gender.MALE) dataType = Params.DataType.HEIGHT_MALE;
+            else dataType = Params.DataType.HEIGHT_FEMALE;
+            GrowthInfo gi = dm.getGrowthInfo(dataType, ageByDay);
+            if(gi!=null) {
+                float p = Utils.getNormalDistribute(gi, height);
+                str += "<br>신장 퍼센타일: " + String.format("%.2f", p * 100) + "p";
+            }
+            else {
+                str += "<br>해당 년령의 신장 데이터가 없습니다.";
+            }
+        }
+
+        if(weight>0) {
+            if(gender==Params.Gender.MALE) dataType = Params.DataType.WEIGHT_MALE;
+            else dataType = Params.DataType.WEIGHT_FEMALE;
+            GrowthInfo gi = dm.getGrowthInfo(dataType, ageByDay);
+            if(gi!=null) {
+                float p = Utils.getNormalDistribute(gi, weight);
+                str += "<br>체중 퍼센타일: " + String.format("%.2f",p*100) + "p";
+            }
+            else {
+                str += "<br>해당 년령의 체중 데이터가 없습니다.";
+            }
+        }
+
+        if(head>0) {
+            if(gender==Params.Gender.MALE) dataType = Params.DataType.HEAD_MALE;
+            else dataType = Params.DataType.HEAD_FEMALE;
+            GrowthInfo gi = dm.getGrowthInfo(dataType, ageByDay);
+            if(gi!=null) {
+                float p = Utils.getNormalDistribute(gi, head);
+                str += "<br>두위 퍼센타일: " + String.format("%.2f",p*100) + "p";
+            }
+            else {
+                str += "<br>해당 년령의 두위 데이터가 없습니다.";
+            }
+        }
+
+        if(bmi>0) {
+            if(gender==Params.Gender.MALE) dataType = Params.DataType.BMI_MALE;
+            else dataType = Params.DataType.BMI_FEMALE;
+            GrowthInfo gi = dm.getGrowthInfo(dataType, ageByDay);
+            if(gi!=null) {
+                float p = Utils.getNormalDistribute(gi, bmi);
+                str += "<br>BMI 퍼센타일: " + String.format("%.2f",p*100) + "p";
+            }
+            else {
+                str += "<br>해당 년령의 BMI 데이터가 없습니다.";
+            }
+        }
+        resultTxt.setText(str+"</html>");
     }
 }

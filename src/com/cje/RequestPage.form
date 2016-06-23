@@ -2,9 +2,10 @@
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="com.cje.RequestPage">
   <grid id="27dc6" binding="mainPanel" layout-manager="BorderLayout" hgap="0" vgap="0">
     <constraints>
-      <xy x="20" y="20" width="640" height="400"/>
+      <xy x="20" y="20" width="640" height="500"/>
     </constraints>
     <properties>
+      <minimumSize width="310" height="500"/>
       <preferredSize width="310" height="300"/>
     </properties>
     <border type="none"/>
@@ -13,7 +14,7 @@
         <constraints border-constraint="Center"/>
         <properties>
           <minimumSize width="310" height="300"/>
-          <preferredSize width="310" height="300"/>
+          <preferredSize width="310" height="270"/>
         </properties>
         <border type="none"/>
         <children>
@@ -22,7 +23,7 @@
             <properties>
               <maximumSize width="500" height="300"/>
               <minimumSize width="500" height="300"/>
-              <preferredSize width="500" height="300"/>
+              <preferredSize width="500" height="250"/>
             </properties>
             <border type="line"/>
             <children>
@@ -41,7 +42,9 @@
                   <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                   <gridbag weightx="1.0" weighty="1.0"/>
                 </constraints>
-                <properties/>
+                <properties>
+                  <preferredSize width="108" height="30"/>
+                </properties>
                 <border type="none"/>
                 <children>
                   <component id="92afd" class="javax.swing.JRadioButton" binding="maleRdBtn">
@@ -289,6 +292,7 @@
                 </constraints>
                 <properties>
                   <minimumSize width="240" height="40"/>
+                  <preferredSize width="205" height="35"/>
                 </properties>
                 <border type="none"/>
                 <children>
@@ -324,6 +328,7 @@
                 <properties>
                   <horizontalAlignment value="0"/>
                   <horizontalTextPosition value="0"/>
+                  <preferredSize width="30" height="35"/>
                   <text value="나이"/>
                 </properties>
               </component>
@@ -393,6 +398,26 @@
           <text value="소아 성장 발달 지표"/>
         </properties>
       </component>
+      <grid id="f7610" binding="resultPanel" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
+        <constraints border-constraint="South"/>
+        <properties>
+          <minimumSize width="24" height="100"/>
+          <preferredSize width="24" height="180"/>
+        </properties>
+        <border type="none"/>
+        <children>
+          <component id="cdfa" class="javax.swing.JLabel" binding="resultTxt">
+            <constraints/>
+            <properties>
+              <horizontalAlignment value="2"/>
+              <horizontalTextPosition value="2"/>
+              <text value=""/>
+              <verticalAlignment value="1"/>
+              <verticalTextPosition value="1"/>
+            </properties>
+          </component>
+        </children>
+      </grid>
     </children>
   </grid>
   <buttonGroups>

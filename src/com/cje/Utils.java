@@ -1,5 +1,7 @@
 package com.cje;
 
+import org.apache.commons.math3.distribution.NormalDistribution;
+
 import javax.swing.*;
 import java.awt.event.KeyEvent;
 import java.time.DateTimeException;
@@ -60,6 +62,27 @@ public class Utils {
         days = (int)((cal2.getTimeInMillis() - cal1.getTimeInMillis())/(24*60*60*1000));
 
         return days;
+    }
+
+    public static float getNormalDistribute(GrowthInfo gi, float value) {
+        double res;
+        double z;
+        double L = gi.getL();
+        double M = gi.getM();
+        double S = gi.getS();
+
+        if(L == 0) {
+            z =  Math.log(value/M)/S;
+        }
+        else {
+            z = (Math.pow((value/M), L) - 1)/(L*S);
+        }
+
+        NormalDistribution nd = new NormalDistribution();
+        res = nd.cumulativeProbability(z);
+        Utils.log("L:"+L+", M:"+M+", S:"+S+",  z:"+z+", res:"+res);
+
+        return (float)res;
     }
 
     public static void showMessage(String msg) {
