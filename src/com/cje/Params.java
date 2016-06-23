@@ -15,7 +15,7 @@ public class Params {
     public enum DataType {
         HEIGHT_MALE("GI_height_male.csv"), HEIGHT_FEMALE("GI_height_female.csv"),
         WEIGHT_MALE("GI_weight_male.csv"), WEIGHT_FEMALE("GI_weight_female.csv"),
-        HEAD_MALE("GI_head_male.csv"), HEAD_FEMALE("GI_head_male.csv"),
+        HEAD_MALE("GI_head_male.csv"), HEAD_FEMALE("GI_head_female.csv"),
         BMI_MALE("GI_bmi_male.csv"), BMI_FEMALE("GI_bmi_female.csv");
 
         String fileName;

@@ -299,6 +299,7 @@
                   <component id="ff626" class="javax.swing.JLabel">
                     <constraints/>
                     <properties>
+                      <horizontalTextPosition value="2"/>
                       <text value="출생시 체중"/>
                     </properties>
                   </component>

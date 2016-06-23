@@ -8,7 +8,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 
@@ -17,18 +16,6 @@ import java.util.logging.Level;
  */
 public class DataManager {
     private Map<Params.DataType, Map<String, GrowthInfo>> giMap;
-//    List<Params.DataType> dataList = Arrays.of
-
-    /*
-    public Map<String, GrowthInfo> weight_male_Map;
-    public Map<String, GrowthInfo> weight_female_Map;
-    public Map<String, GrowthInfo> height_male_Map;
-    public Map<String, GrowthInfo> height_female_Map;
-    public Map<String, GrowthInfo> bmi_male_Map;
-    public Map<String, GrowthInfo> bmi_female_Map;
-    public Map<String, GrowthInfo> head_male_Map;
-    public Map<String, GrowthInfo> head_female_Map;
-    */
 
     public DataManager() {
         //giMap = new HashMap<Params.DataType, Map<String, GrowthInfo>>();
@@ -94,12 +81,16 @@ public class DataManager {
         return map;
     }
 
+    /*
+     */
     public GrowthInfo getGrowthInfo(Params.DataType dataType, int ageByDay) {
         int ageByMonth = ageByDay/30;  // By month
-        float key = (float)ageByMonth - 0.5f;
+        float medianMonth = (float)ageByMonth - 0.5f;
+        String key = String.valueOf(medianMonth);
+        if(medianMonth<0) key = "0";    // at birth
         Utils.log("key:"+key);
         Map<String, GrowthInfo> map = giMap.get(dataType);
-        GrowthInfo gi = map.get(String.valueOf(key));
+        GrowthInfo gi = map.get(key);
         return gi;
     }
 

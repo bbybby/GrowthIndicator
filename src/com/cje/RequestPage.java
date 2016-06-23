@@ -49,6 +49,7 @@ public class RequestPage extends JFrame{
     private int cMonth;
     private int cDay;
 
+    private float birthWeight;
     private float height;
     private float weight;
     private float head;
@@ -65,6 +66,7 @@ public class RequestPage extends JFrame{
         birthDay = -1;
         ageByDay = -1;
 
+        birthWeight = -1;
         height = -1;
         weight = -1;
         head = -1;
@@ -119,6 +121,9 @@ public class RequestPage extends JFrame{
                         Utils.showMessage("Please input number correctly");
                         birthWeightTxt.requestFocus();
                         return;
+                    }
+                    else {
+                        birthWeight = Float.parseFloat(birthWeightTxt.getText());
                     }
                 }
 
@@ -322,6 +327,7 @@ public class RequestPage extends JFrame{
                     birthDay = -1;
                     ageByDay = -1;
 
+                    birthWeight = -1;
                     height = -1;
                     weight = -1;
                     head = -1;
@@ -350,7 +356,21 @@ public class RequestPage extends JFrame{
     private void showResults() {
         Params.DataType dataType;
         //resultTxt.setText("[입력에 대한 결과]");
-        String str = "<html>[입력에 대한 결과]";
+        String str = "<html><h3>[입력에 대한 결과]</h3>";
+
+        if(birthWeight>0) {
+            if(gender==Params.Gender.MALE) dataType = Params.DataType.WEIGHT_MALE;
+            else dataType = Params.DataType.WEIGHT_FEMALE;
+            GrowthInfo gi = dm.getGrowthInfo(dataType, 0);
+            str += "<br>출생시 체중("+birthWeight+"kg)의 퍼센타일 : ";
+            if(gi!=null) {
+                float p = Utils.getNormalDistribute(gi, birthWeight);
+                str += String.format("%.2f", p * 100) + "p<br>";
+            }
+            else {
+                str += "<br>해당 년령의 데이터가 없습니다.";
+            }
+        }
 
         if(height>0) {
             if(gender==Params.Gender.MALE) dataType = Params.DataType.HEIGHT_MALE;
