@@ -83,14 +83,26 @@ public class DataManager {
 
     /*
      */
-    public GrowthInfo getGrowthInfo(Params.DataType dataType, int ageByDay) {
-        int ageByMonth = ageByDay/30;  // By month
-        float medianMonth = (float)ageByMonth - 0.5f;
-        String key = String.valueOf(medianMonth);
-        if(medianMonth<0) key = "0";    // at birth
-        Utils.log("key:"+key);
+    public GrowthInfo getGrowthInfo(Params.DataType dataType, int ageByDay, boolean isCalculatedByDay) {
+        GrowthInfo gi = null;
         Map<String, GrowthInfo> map = giMap.get(dataType);
-        GrowthInfo gi = map.get(key);
+        if(isCalculatedByDay) { // get approximate data based on the age by day
+            gi = getAdjustedGrowthInfo(map, ageByDay);
+        }
+        else {  // get data based on the age by months
+            int ageByMonth = ageByDay/30;  // By month
+            float medianMonth = (float)ageByMonth + 0.5f;
+            String key = String.valueOf(medianMonth);
+            if(medianMonth==0.5f) key = "0";    // at birth
+
+            gi = map.get(key);
+        }
+        return gi;
+    }
+
+    private GrowthInfo getAdjustedGrowthInfo(Map<String, GrowthInfo> map, int ageByDay) {
+        GrowthInfo gi = null;
+
         return gi;
     }
 

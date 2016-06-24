@@ -6,15 +6,15 @@
     </constraints>
     <properties>
       <minimumSize width="310" height="500"/>
-      <preferredSize width="310" height="300"/>
+      <preferredSize width="310" height="500"/>
     </properties>
     <border type="none"/>
     <children>
       <grid id="52e0" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
         <constraints border-constraint="Center"/>
         <properties>
-          <minimumSize width="310" height="300"/>
-          <preferredSize width="310" height="270"/>
+          <minimumSize width="310" height="200"/>
+          <preferredSize width="310" height="220"/>
         </properties>
         <border type="none"/>
         <children>
@@ -22,8 +22,8 @@
             <constraints/>
             <properties>
               <maximumSize width="500" height="300"/>
-              <minimumSize width="500" height="300"/>
-              <preferredSize width="500" height="250"/>
+              <minimumSize width="540" height="200"/>
+              <preferredSize width="540" height="230"/>
             </properties>
             <border type="line"/>
             <children>
@@ -142,7 +142,7 @@
                     </constraints>
                     <properties>
                       <columns value="5"/>
-                      <minimumSize width="30" height="23"/>
+                      <minimumSize width="50" height="23"/>
                     </properties>
                   </component>
                   <component id="1e7c7" class="javax.swing.JLabel">
@@ -172,7 +172,7 @@
                     </constraints>
                     <properties>
                       <columns value="5"/>
-                      <minimumSize width="30" height="23"/>
+                      <minimumSize width="50" height="23"/>
                     </properties>
                   </component>
                   <component id="b90c9" class="javax.swing.JLabel">
@@ -202,7 +202,7 @@
                     </constraints>
                     <properties>
                       <columns value="5"/>
-                      <minimumSize width="30" height="23"/>
+                      <minimumSize width="50" height="23"/>
                       <text value=""/>
                     </properties>
                   </component>
@@ -224,19 +224,6 @@
                       <text value="BMI"/>
                     </properties>
                   </component>
-                  <component id="b5f1c" class="javax.swing.JFormattedTextField" binding="bmiTxt">
-                    <constraints>
-                      <grid row="0" column="13" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
-                        <preferred-size width="150" height="-1"/>
-                      </grid>
-                      <gridbag weightx="0.0" weighty="0.0"/>
-                    </constraints>
-                    <properties>
-                      <columns value="5"/>
-                      <minimumSize width="74" height="23"/>
-                      <text value=""/>
-                    </properties>
-                  </component>
                   <hspacer id="20aeb">
                     <constraints>
                       <grid row="0" column="3" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
@@ -255,6 +242,19 @@
                       <gridbag weightx="0.0" weighty="0.0"/>
                     </constraints>
                   </hspacer>
+                  <component id="b5f1c" class="javax.swing.JFormattedTextField" binding="bmiTxt">
+                    <constraints>
+                      <grid row="0" column="13" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                        <preferred-size width="150" height="-1"/>
+                      </grid>
+                      <gridbag weightx="0.0" weighty="0.0"/>
+                    </constraints>
+                    <properties>
+                      <columns value="5"/>
+                      <minimumSize width="50" height="23"/>
+                      <text value=""/>
+                    </properties>
+                  </component>
                 </children>
               </grid>
               <component id="6a8a3" class="javax.swing.JButton" binding="viewBtn">
@@ -269,7 +269,7 @@
               </component>
               <vspacer id="baada">
                 <constraints>
-                  <grid row="5" column="2" row-span="1" col-span="5" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
+                  <grid row="5" column="2" row-span="1" col-span="3" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
                   <gridbag weightx="0.0" weighty="0.0"/>
                 </constraints>
               </vspacer>
@@ -370,6 +370,7 @@
                 </constraints>
                 <properties>
                   <margin top="3" left="18" bottom="3" right="18"/>
+                  <preferredSize width="120" height="39"/>
                   <text value="프로그램 종료"/>
                 </properties>
               </component>
@@ -385,6 +386,17 @@
                   <gridbag weightx="0.0" weighty="0.0"/>
                 </constraints>
               </hspacer>
+              <component id="abc59" class="javax.swing.JCheckBox" binding="calculateByDayCkBox">
+                <constraints>
+                  <grid row="4" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                  <gridbag weightx="0.0" weighty="0.0"/>
+                </constraints>
+                <properties>
+                  <minimumSize width="115" height="31"/>
+                  <preferredSize width="115" height="31"/>
+                  <text value="일별근사치"/>
+                </properties>
+              </component>
             </children>
           </grid>
         </children>
@@ -392,6 +404,7 @@
       <component id="dc734" class="javax.swing.JLabel">
         <constraints border-constraint="North"/>
         <properties>
+          <font size="16"/>
           <horizontalAlignment value="0"/>
           <horizontalTextPosition value="0"/>
           <minimumSize width="135" height="50"/>
@@ -402,10 +415,10 @@
       <grid id="f7610" binding="resultPanel" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
         <constraints border-constraint="South"/>
         <properties>
-          <minimumSize width="24" height="100"/>
-          <preferredSize width="24" height="180"/>
+          <minimumSize width="100" height="200"/>
+          <preferredSize width="100" height="220"/>
         </properties>
-        <border type="none"/>
+        <border type="bevel-raised"/>
         <children>
           <component id="cdfa" class="javax.swing.JLabel" binding="resultTxt">
             <constraints/>

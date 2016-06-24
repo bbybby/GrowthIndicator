@@ -1,17 +1,10 @@
 package com.cje;
 
 import javax.swing.*;
-import javax.swing.text.DateFormatter;
-import javax.swing.text.DefaultFormatterFactory;
-import javax.swing.text.InternationalFormatter;
 import javax.swing.text.MaskFormatter;
-import javax.xml.crypto.Data;
 import java.awt.event.*;
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.logging.Level;
 
 /**
@@ -38,6 +31,7 @@ public class RequestPage extends JFrame{
     private JButton exitBtn;
     private JPanel resultPanel;
     private JLabel resultTxt;
+    private JCheckBox calculateByDayCkBox;
     private JLabel ageLabel;
 
     private DataManager dm;
@@ -58,6 +52,7 @@ public class RequestPage extends JFrame{
     private int ageByDay;
 
     boolean isDataLoaded;
+    boolean isCaculatedByDay;
 
     // Initialize member variables and load data from files
     public void init() {
@@ -75,6 +70,7 @@ public class RequestPage extends JFrame{
         // Load Data
         dm = new DataManager();
         isDataLoaded = false;
+        isCaculatedByDay = false;
 
         isDataLoaded = dm.loadData();
         if(!isDataLoaded) {
@@ -342,6 +338,18 @@ public class RequestPage extends JFrame{
                 }
             }
         });
+        calculateByDayCkBox.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if(calculateByDayCkBox.isSelected()) {
+                    isCaculatedByDay = true;
+                }
+                else {
+                    isCaculatedByDay = false;
+                }
+
+            }
+        });
     }
 
 
@@ -361,7 +369,7 @@ public class RequestPage extends JFrame{
         if(birthWeight>0) {
             if(gender==Params.Gender.MALE) dataType = Params.DataType.WEIGHT_MALE;
             else dataType = Params.DataType.WEIGHT_FEMALE;
-            GrowthInfo gi = dm.getGrowthInfo(dataType, 0);
+            GrowthInfo gi = dm.getGrowthInfo(dataType, 0, isCaculatedByDay);
             str += "<br>출생시 체중("+birthWeight+"kg)의 퍼센타일 : ";
             if(gi!=null) {
                 float p = Utils.getNormalDistribute(gi, birthWeight);
@@ -375,7 +383,7 @@ public class RequestPage extends JFrame{
         if(height>0) {
             if(gender==Params.Gender.MALE) dataType = Params.DataType.HEIGHT_MALE;
             else dataType = Params.DataType.HEIGHT_FEMALE;
-            GrowthInfo gi = dm.getGrowthInfo(dataType, ageByDay);
+            GrowthInfo gi = dm.getGrowthInfo(dataType, ageByDay, isCaculatedByDay);
             if(gi!=null) {
                 float p = Utils.getNormalDistribute(gi, height);
                 str += "<br>신장 퍼센타일: " + String.format("%.2f", p * 100) + "p";
@@ -388,7 +396,7 @@ public class RequestPage extends JFrame{
         if(weight>0) {
             if(gender==Params.Gender.MALE) dataType = Params.DataType.WEIGHT_MALE;
             else dataType = Params.DataType.WEIGHT_FEMALE;
-            GrowthInfo gi = dm.getGrowthInfo(dataType, ageByDay);
+            GrowthInfo gi = dm.getGrowthInfo(dataType, ageByDay, isCaculatedByDay);
             if(gi!=null) {
                 float p = Utils.getNormalDistribute(gi, weight);
                 str += "<br>체중 퍼센타일: " + String.format("%.2f",p*100) + "p";
@@ -401,7 +409,7 @@ public class RequestPage extends JFrame{
         if(head>0) {
             if(gender==Params.Gender.MALE) dataType = Params.DataType.HEAD_MALE;
             else dataType = Params.DataType.HEAD_FEMALE;
-            GrowthInfo gi = dm.getGrowthInfo(dataType, ageByDay);
+            GrowthInfo gi = dm.getGrowthInfo(dataType, ageByDay, isCaculatedByDay);
             if(gi!=null) {
                 float p = Utils.getNormalDistribute(gi, head);
                 str += "<br>두위 퍼센타일: " + String.format("%.2f",p*100) + "p";
@@ -414,7 +422,7 @@ public class RequestPage extends JFrame{
         if(bmi>0) {
             if(gender==Params.Gender.MALE) dataType = Params.DataType.BMI_MALE;
             else dataType = Params.DataType.BMI_FEMALE;
-            GrowthInfo gi = dm.getGrowthInfo(dataType, ageByDay);
+            GrowthInfo gi = dm.getGrowthInfo(dataType, ageByDay, isCaculatedByDay);
             if(gi!=null) {
                 float p = Utils.getNormalDistribute(gi, bmi);
                 str += "<br>BMI 퍼센타일: " + String.format("%.2f",p*100) + "p";
