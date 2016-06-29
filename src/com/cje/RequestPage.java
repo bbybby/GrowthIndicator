@@ -229,7 +229,6 @@ public class RequestPage extends JFrame{
                     birthMonth = Integer.parseInt(str[1]);
                     birthDay = Integer.parseInt(str[2]);
                 } catch(Exception ex) {
-                    Utils.log("focust Lost: "+ex.getMessage());
                     birthDateTxt.setText("");
                     birthDateTxt.requestFocus();
                     return;
@@ -247,6 +246,7 @@ public class RequestPage extends JFrame{
                     int rest_months = months%12;
                     int rest_days = ageByDay%30;
                     String label = months  + "개월   [ ";
+                    label += ageByDay + "일 : ";
                     if(years>0) label += years+"년 ";
                     if(rest_months>0) label += rest_months+"개월";
                     label += " "+rest_days+"일 ]";

@@ -4,6 +4,7 @@ import org.apache.commons.math3.distribution.NormalDistribution;
 
 import javax.swing.*;
 import java.awt.event.KeyEvent;
+import java.text.SimpleDateFormat;
 import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.util.Calendar;
@@ -54,12 +55,21 @@ public class Utils {
 
     public static int getDayBetweenDates(int fromYear, int fromMonth, int fromDay, int toYear, int toMonth, int toDay) {
         int days = -1;
-        Calendar cal1 = Calendar.getInstance();
-        cal1.set(fromYear, fromMonth, fromDay);
-        Calendar cal2 = Calendar.getInstance();
-        cal2.set(toYear, toMonth, toDay);
 
-        days = (int)((cal2.getTimeInMillis() - cal1.getTimeInMillis())/(24*60*60*1000));
+        try {
+            String begin = String.format("%2d%2d%2d", fromYear, fromMonth, fromDay);
+            String end = String.format("%2d%2d%2d", toYear, toMonth, toDay);
+            Utils.log("begin:"+begin);
+            Utils.log("end:"+end);
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
+            Date beginDate = formatter.parse(begin);
+            Date endDate = formatter.parse(end);
+
+            days = (int)((endDate.getTime() - beginDate.getTime()) / (24 * 60 * 60 * 1000));
+        }
+        catch (Exception e){
+            Utils.LOGGER.warning("parse error in getDayBetweenDates():"+e.getMessage());
+        }
 
         return days;
     }
