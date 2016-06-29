@@ -4,7 +4,7 @@ package com.cje;
  * Created by bbybby on 6/15/2016.
  */
 public class GrowthInfo {
-    private float age;  // by month
+    private float age;  // by month; should have only tenth except '0'   ex) 0, 0.5, 1.0, 1.5, ....
     private float l;    // L value
     private float m;    // M value
     private float s;    // S value
@@ -66,10 +66,7 @@ public class GrowthInfo {
         return p97;
     }
 
-    public float getAge() {
-
-        return age;
-    }
+    public float getAge() { return age; }
 
     public GrowthInfo(float _age, float _l, float _m, float _s,
                       String _p3, String _p5, String _p10, String _p25,

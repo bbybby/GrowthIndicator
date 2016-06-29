@@ -5,7 +5,7 @@ package com.cje;
  */
 public class Params {
     public static final int MAX_INPUT_LENGTH = 6;
-    public static final int BIRTH_YEAR_GAP = 20;
+//    public static final int BIRTH_YEAR_GAP = 20;
 
     public static final String FILE_PATH = "C:\\Users\\bbybby\\Works\\Programming\\Projects\\GrowthIndicator\\data\\";
     public static final String FIELD_DIVIDER = ",";

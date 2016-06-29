@@ -86,24 +86,100 @@ public class DataManager {
     public GrowthInfo getGrowthInfo(Params.DataType dataType, int ageByDay, boolean isCalculatedByDay) {
         GrowthInfo gi = null;
         Map<String, GrowthInfo> map = giMap.get(dataType);
-        if(isCalculatedByDay) { // get approximate data based on the age by day
-            gi = getAdjustedGrowthInfo(map, ageByDay);
+        float medianMonthKey = (float)((int)(ageByDay/30))+ 0.5f;
+
+        if(ageByDay == 0) {  // at birth
+            gi = map.get("0");
+            return gi;
+        }
+
+        if(isCalculatedByDay) { // get approximate data based on the age by days
+            gi = getAdjustedGrowthInfo(map, ageByDay, medianMonthKey);
+            Utils.LOGGER.info("Getting approximate value by days ["+ageByDay+"]");
         }
         else {  // get data based on the age by months
-            int ageByMonth = ageByDay/30;  // By month
-            float medianMonth = (float)ageByMonth + 0.5f;
-            String key = String.valueOf(medianMonth);
-            if(medianMonth==0.5f) key = "0";    // at birth
-
-            gi = map.get(key);
+            gi = map.get(String.valueOf(medianMonthKey));
+            Utils.LOGGER.info("Getting data from key value");
         }
         return gi;
     }
 
-    private GrowthInfo getAdjustedGrowthInfo(Map<String, GrowthInfo> map, int ageByDay) {
-        GrowthInfo gi = null;
+    private GrowthInfo getAdjustedGrowthInfo(Map<String, GrowthInfo> map, int ageByDay, float medianMonthKey) {
+        GrowthInfo gi = map.get(String.valueOf(medianMonthKey));
+        GrowthInfo gi_neighbor = null;
+        GrowthInfo gi_result  = null;
+        int keyDays = (int)medianMonthKey*30;
 
-        return gi;
+        if(gi == null) {    // We don't need to go further
+            return null;
+        }
+
+        if(ageByDay == keyDays) {   // we don't need to get approximate value
+            return gi;
+        }
+        else if(ageByDay < keyDays) {   // use the data of a month younger age
+            float youngerAge = medianMonthKey - 1.0f;
+            gi_neighbor = map.get(String.valueOf(youngerAge));
+        }
+        else {  // use the data of a month older age
+            float olderAge = medianMonthKey + 1.0f;
+            gi_neighbor = map.get(String.valueOf(olderAge));
+        }
+
+        gi_result = getApproximateValue(gi, gi_neighbor, ageByDay);
+
+        if(gi_result == null) {   //
+            Utils.showMessage("근사값을 구할 수 없어서 기준월령값("+medianMonthKey+"개월)으로 표시합니다.");
+            Utils.LOGGER.log(Level.WARNING,
+                    "Couldn't get neighbor data for approximate value [Key of age by months:"+medianMonthKey+"]");
+            return gi;  // data searched by median key value
+        }
+
+
+        return gi_result;
+    }
+
+    /*
+     getting the approximate value using a linear equation (y = mx + b)
+      */
+    private GrowthInfo getApproximateValue(GrowthInfo gi, GrowthInfo gi_neighbor, int ageByDay) {
+        if(gi_neighbor == null) return null;
+        if(gi == null) {
+            Utils.LOGGER.log(Level.WARNING, "Object of GrowthInfo should not be null in getApproximateValue()");
+            return null;
+        }
+
+        float age, l, m, s;
+        float p3, p5, p10, p25, p50, p75, p90, p95, p97;
+        float x1 = gi.getAge() * 30;    // key age by days of gi
+        float x2 = gi_neighbor.getAge() * 30;   // key age by days of gi_neighbor
+
+        age = Math.round(((float)ageByDay/30)*10)/10;
+        l = Utils.getApproximateValue(x1, gi.getL(), x2, gi_neighbor.getL(), ageByDay);
+        m = Utils.getApproximateValue(x1, gi.getM(), x2, gi_neighbor.getM(), ageByDay);
+        s = Utils.getApproximateValue(x1, gi.getS(), x2, gi_neighbor.getS(), ageByDay);
+        p3 = Utils.getApproximateValue(x1, Float.parseFloat(gi.getP3()), x2, Float.parseFloat(gi_neighbor.getP3()), ageByDay);
+        p5 = Utils.getApproximateValue(x1, Float.parseFloat(gi.getP5()), x2, Float.parseFloat(gi_neighbor.getP5()), ageByDay);
+        p10 = Utils.getApproximateValue(x1, Float.parseFloat(gi.getP10()), x2, Float.parseFloat(gi_neighbor.getP10()), ageByDay);
+        p25 = Utils.getApproximateValue(x1, Float.parseFloat(gi.getP25()), x2, Float.parseFloat(gi_neighbor.getP25()), ageByDay);
+        p50 = Utils.getApproximateValue(x1, Float.parseFloat(gi.getP50()), x2, Float.parseFloat(gi_neighbor.getP50()), ageByDay);
+        p75 = Utils.getApproximateValue(x1, Float.parseFloat(gi.getP75()), x2, Float.parseFloat(gi_neighbor.getP75()), ageByDay);
+        p90 = Utils.getApproximateValue(x1, Float.parseFloat(gi.getP90()), x2, Float.parseFloat(gi_neighbor.getP90()), ageByDay);
+        p95 = Utils.getApproximateValue(x1, Float.parseFloat(gi.getP95()), x2, Float.parseFloat(gi_neighbor.getP95()), ageByDay);
+        p97 = Utils.getApproximateValue(x1, Float.parseFloat(gi.getP97()), x2, Float.parseFloat(gi_neighbor.getP97()), ageByDay);
+
+        GrowthInfo result_gi = new GrowthInfo(age, l, m, s,
+                        String.format("%.2f", p3),
+                        String.format("%.2f", p5),
+                        String.format("%.2f", p10),
+                        String.format("%.2f", p25),
+                        String.format("%.2f", p50),
+                        String.format("%.2f", p75),
+                        String.format("%.2f", p90),
+                        String.format("%.2f", p95),
+                        String.format("%.2f", p97) );
+
+        return result_gi;
     }
 
     /*

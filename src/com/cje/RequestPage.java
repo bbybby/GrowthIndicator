@@ -122,6 +122,9 @@ public class RequestPage extends JFrame{
                         birthWeight = Float.parseFloat(birthWeightTxt.getText());
                     }
                 }
+                else {
+                    birthWeight = -1;
+                }
 
                 // Check Date of Birth
                 if(ageByDay<0) {
@@ -141,6 +144,9 @@ public class RequestPage extends JFrame{
                        height = Float.parseFloat(heightTxt.getText());
                    }
                 }
+                else {
+                   height = -1;
+                }
 
                 // Check Weight value
                 if(weightTxt.getText().length()>0) {
@@ -152,6 +158,9 @@ public class RequestPage extends JFrame{
                     else {
                         weight = Float.parseFloat(weightTxt.getText());
                     }
+                }
+                else {
+                    weight = -1;
                 }
 
                 // Check the girth of Head value
@@ -165,6 +174,9 @@ public class RequestPage extends JFrame{
                         head = Float.parseFloat(headTxt.getText());
                     }
                 }
+                else {
+                    head = -1;
+                }
 
                 // Check BMI value
                 if(bmiTxt.getText().length()>0) {
@@ -176,6 +188,9 @@ public class RequestPage extends JFrame{
                     else {
                         bmi = Float.parseFloat(bmiTxt.getText());
                     }
+                }
+                else {
+                    bmi = -1;
                 }
 
                 showResults();
@@ -387,6 +402,9 @@ public class RequestPage extends JFrame{
             if(gi!=null) {
                 float p = Utils.getNormalDistribute(gi, height);
                 str += "<br>신장 퍼센타일: " + String.format("%.2f", p * 100) + "p";
+                str +="<br> [ 3p:"+gi.getP3()+", 5p:"+gi.getP5()+", 10p:"+gi.getP10()+", "
+                        +"25p:"+gi.getP25()+", 50p:"+gi.getP50()+", 75p:"+gi.getP75()+", "
+                        +"90p:"+gi.getP90()+", 95p:"+gi.getP95()+", 97p:"+gi.getP97()+" ]";
             }
             else {
                 str += "<br>해당 년령의 신장 데이터가 없습니다.";
@@ -400,6 +418,9 @@ public class RequestPage extends JFrame{
             if(gi!=null) {
                 float p = Utils.getNormalDistribute(gi, weight);
                 str += "<br>체중 퍼센타일: " + String.format("%.2f",p*100) + "p";
+                str +="<br> [ 3p:"+gi.getP3()+", 5p:"+gi.getP5()+", 10p:"+gi.getP10()+", "
+                        +"25p:"+gi.getP25()+", 50p:"+gi.getP50()+", 75p:"+gi.getP75()+", "
+                        +"90p:"+gi.getP90()+", 95p:"+gi.getP95()+", 97p:"+gi.getP97()+" ]";
             }
             else {
                 str += "<br>해당 년령의 체중 데이터가 없습니다.";
@@ -413,6 +434,9 @@ public class RequestPage extends JFrame{
             if(gi!=null) {
                 float p = Utils.getNormalDistribute(gi, head);
                 str += "<br>두위 퍼센타일: " + String.format("%.2f",p*100) + "p";
+                str +="<br> [ 3p:"+gi.getP3()+", 5p:"+gi.getP5()+", 10p:"+gi.getP10()+", "
+                        +"25p:"+gi.getP25()+", 50p:"+gi.getP50()+", 75p:"+gi.getP75()+", "
+                        +"90p:"+gi.getP90()+", 95p:"+gi.getP95()+", 97p:"+gi.getP97()+" ]";
             }
             else {
                 str += "<br>해당 년령의 두위 데이터가 없습니다.";
@@ -426,6 +450,9 @@ public class RequestPage extends JFrame{
             if(gi!=null) {
                 float p = Utils.getNormalDistribute(gi, bmi);
                 str += "<br>BMI 퍼센타일: " + String.format("%.2f",p*100) + "p";
+                str +="<br> [ 3p:"+gi.getP3()+", 5p:"+gi.getP5()+", 10p:"+gi.getP10()+", "
+                        +"25p:"+gi.getP25()+", 50p:"+gi.getP50()+", 75p:"+gi.getP75()+", "
+                        +"90p:"+gi.getP90()+", 95p:"+gi.getP95()+", 97p:"+gi.getP97()+" ]";
             }
             else {
                 str += "<br>해당 년령의 BMI 데이터가 없습니다.";

@@ -85,6 +85,22 @@ public class Utils {
         return (float)res;
     }
 
+    /*
+     getting the approximate value using a linear equation (y = mx + b)
+      */
+    public static float getApproximateValue(float x1, float y1, float x2, float y2, float x) {
+        float y;
+        float m;    // slope in the equation
+        float b;    // constant in the equation
+
+        m = (y2-y1)/(x2-x1);
+        b = y1 - m*x1;
+
+        y = m*x + b;
+
+        return y;
+    }
+
     public static void showMessage(String msg) {
         JOptionPane.showMessageDialog(null, msg);
     }
