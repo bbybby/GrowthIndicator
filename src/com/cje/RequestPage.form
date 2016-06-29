@@ -10,20 +10,20 @@
     </properties>
     <border type="none"/>
     <children>
-      <grid id="52e0" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
-        <constraints border-constraint="Center"/>
+      <grid id="52e0" layout-manager="BorderLayout" hgap="0" vgap="0">
+        <constraints border-constraint="North"/>
         <properties>
-          <minimumSize width="310" height="200"/>
-          <preferredSize width="310" height="220"/>
+          <minimumSize width="520" height="200"/>
+          <preferredSize width="520" height="220"/>
         </properties>
         <border type="none"/>
         <children>
           <grid id="f3298" binding="inputPanel" layout-manager="GridBagLayout">
-            <constraints/>
+            <constraints border-constraint="Center"/>
             <properties>
               <maximumSize width="500" height="300"/>
-              <minimumSize width="540" height="200"/>
-              <preferredSize width="540" height="230"/>
+              <minimumSize width="500" height="200"/>
+              <preferredSize width="500" height="230"/>
             </properties>
             <border type="line"/>
             <children>
@@ -399,21 +399,21 @@
               </component>
             </children>
           </grid>
+          <component id="dc734" class="javax.swing.JLabel">
+            <constraints border-constraint="North"/>
+            <properties>
+              <font size="16"/>
+              <horizontalAlignment value="0"/>
+              <horizontalTextPosition value="0"/>
+              <minimumSize width="135" height="50"/>
+              <preferredSize width="135" height="50"/>
+              <text value="소아 성장 발달 지표"/>
+            </properties>
+          </component>
         </children>
       </grid>
-      <component id="dc734" class="javax.swing.JLabel">
-        <constraints border-constraint="North"/>
-        <properties>
-          <font size="16"/>
-          <horizontalAlignment value="0"/>
-          <horizontalTextPosition value="0"/>
-          <minimumSize width="135" height="50"/>
-          <preferredSize width="135" height="50"/>
-          <text value="소아 성장 발달 지표"/>
-        </properties>
-      </component>
       <grid id="f7610" binding="resultPanel" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
-        <constraints border-constraint="South"/>
+        <constraints border-constraint="Center"/>
         <properties>
           <minimumSize width="100" height="200"/>
           <preferredSize width="100" height="220"/>
