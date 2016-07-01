@@ -57,8 +57,8 @@ public class Utils {
         int days = -1;
 
         try {
-            String begin = String.format("%2d%2d%2d", fromYear, fromMonth, fromDay);
-            String end = String.format("%2d%2d%2d", toYear, toMonth, toDay);
+            String begin = String.format("%d%02d%02d", fromYear, fromMonth, fromDay);
+            String end = String.format("%d%02d%02d", toYear, toMonth, toDay);
             Utils.log("begin:"+begin);
             Utils.log("end:"+end);
             SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");

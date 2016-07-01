@@ -423,6 +423,7 @@
           <component id="cdfa" class="javax.swing.JLabel" binding="resultTxt">
             <constraints/>
             <properties>
+              <font size="16"/>
               <horizontalAlignment value="2"/>
               <horizontalTextPosition value="2"/>
               <text value=""/>
