@@ -1,7 +1,9 @@
 package com.cje;
 
 /**
- * Created by bbybby on 6/15/2016.
+ * Created by Jieun Choi on 6/15/2016.
+ *
+ * class for data module
  */
 public class GrowthInfo {
     private float age;  // by month; should have only tenth except '0'   ex) 0, 0.5, 1.0, 1.5, ....

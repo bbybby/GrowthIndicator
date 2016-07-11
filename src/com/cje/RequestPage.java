@@ -4,11 +4,14 @@ import javax.swing.*;
 import javax.swing.text.MaskFormatter;
 import java.awt.event.*;
 import java.text.ParseException;
-import java.util.Calendar;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.logging.Level;
 
 /**
- * Created by bbybby on 6/8/2016.
+ * Created by Jieun Choi on 6/8/2016.
+ *
+ * class for User interface
  */
 public class RequestPage extends JFrame{
     private JTextField titleTextField;
@@ -35,11 +38,12 @@ public class RequestPage extends JFrame{
     private JLabel ageLabel;
 
     private DataManager dm;
+    private ResultView rv;
     private Params.Gender gender = Params.Gender.NONE;
     private int birthYear;
     private int birthMonth;
     private int birthDay;
-    private int cYear;  // current Year
+    private LocalDate today;
     private int cMonth;
     private int cDay;
 
@@ -52,10 +56,10 @@ public class RequestPage extends JFrame{
     private int ageByDay;
 
     boolean isDataLoaded;
-    boolean isCaculatedByDay;
+    boolean isCalculatedByDay;
 
-    // Initialize member variables and load data from files
-    public void init() {
+    // Initialize member variables
+    private void initParam() {
         birthYear = -1;
         birthMonth = -1;
         birthDay = -1;
@@ -66,11 +70,17 @@ public class RequestPage extends JFrame{
         weight = -1;
         head = -1;
         bmi = -1;
+    }
+
+    private void init() {
+        initParam();
+
+        dm = new DataManager();
+        rv = new ResultView();
 
         // Load Data
-        dm = new DataManager();
         isDataLoaded = false;
-        isCaculatedByDay = false;
+        isCalculatedByDay = true;
 
         isDataLoaded = dm.loadData();
         if(!isDataLoaded) {
@@ -82,17 +92,15 @@ public class RequestPage extends JFrame{
     public RequestPage() {
         super("Growth Indicator");
 
-        Calendar cal = Calendar.getInstance();
-        cYear = cal.get(Calendar.YEAR);
-        cMonth = cal.get(Calendar.MONTH) + 1;   // since January is 0, Dec. is 11
-        cDay = cal.get(Calendar.DAY_OF_MONTH);
-        todayTxt.setText("[기준일] "+cYear+"년 "+cMonth+"월 "+cDay+"일");
+        today = LocalDate.now();
+        todayTxt.setText("[기준일] "+today.getYear()+"년 "+today.getMonthValue()+"월 "+today.getDayOfMonth()+"일");
 
         setContentPane(mainPanel);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         pack();
         setLocationRelativeTo(null);
 
+        // initialize variables and the objects
         init();
 
         viewBtn.addActionListener(new ActionListener() {
@@ -111,7 +119,7 @@ public class RequestPage extends JFrame{
                     return;
                 }
 
-                // Check Weight of Birth
+                // Check Weight at Birth
                 if(birthWeightTxt.getText().length()!=0) {
                     if(!Utils.isActualNumber(birthWeightTxt.getText())) {
                         Utils.showMessage("Please input number correctly");
@@ -194,12 +202,6 @@ public class RequestPage extends JFrame{
                 }
 
                 showResults();
-                //
-                /*
-                GrowthInfo gi = dm.getGrowthInfo(ageByDay);
-                Utils.log("Age:"+ ageByDay/30 +", L:"+gi.getL()+", M:"+gi.getM()+", S:"+gi.getS()+
-                    ", "+gi.getP3());
-                    */
             }
         });
 
@@ -228,6 +230,7 @@ public class RequestPage extends JFrame{
                     birthYear = Integer.parseInt(str[0]);
                     birthMonth = Integer.parseInt(str[1]);
                     birthDay = Integer.parseInt(str[2]);
+                   Utils.log("Birth year:"+birthYear +", month:"+birthMonth+", day:"+birthDay);
                 } catch(Exception ex) {
                     birthDateTxt.setText("");
                     birthDateTxt.requestFocus();
@@ -235,23 +238,18 @@ public class RequestPage extends JFrame{
                 }
 
                 if(Utils.isValidDate(birthYear, birthMonth, birthDay)) {
-                    ageByDay = Utils.getDayBetweenDates(birthYear, birthMonth, birthDay, cYear, cMonth, cDay);
+                    LocalDate birthday = LocalDate.of(birthYear, birthMonth, birthDay);
+                    ageByDay = (int) ChronoUnit.DAYS.between(birthday, today);
+
+                    Utils.log("LocalDate]"+birthday.getYear()+":"+birthday.getMonthValue()+":"+birthday.getDayOfMonth()+":"+birthday.getDayOfWeek());
+
                     if(ageByDay<0) {
                         Utils.showMessage("The Date should be earlier than today");
                         birthDateTxt.requestFocus();
                         return;
                     }
-                    int months = ageByDay/30;
-                    int years = months/12;
-                    int rest_months = months%12;
-                    int rest_days = ageByDay%30;
-                    String label = months  + "개월   [ ";
-                    label += ageByDay + "일 : ";
-                    if(years>0) label += years+"년 ";
-                    if(rest_months>0) label += rest_months+"개월";
-                    label += " "+rest_days+"일 ]";
 
-                    ageTxt.setText(label);
+                    ageTxt.setText(Utils.getAgeLabel(birthday, today, ageByDay));
                 }
                 else {
                     Utils.showMessage("Please check the date");
@@ -333,16 +331,8 @@ public class RequestPage extends JFrame{
                     bmiTxt.setText("");
                     resultTxt.setText("");
 
-                    birthYear = -1;
-                    birthMonth = -1;
-                    birthDay = -1;
-                    ageByDay = -1;
-
-                    birthWeight = -1;
-                    height = -1;
-                    weight = -1;
-                    head = -1;
-                    bmi = -1;
+                    initParam();
+                    rv.cleanView();
             }
         });
         exitBtn.addActionListener(new ActionListener() {
@@ -357,10 +347,10 @@ public class RequestPage extends JFrame{
             @Override
             public void itemStateChanged(ItemEvent e) {
                 if(calculateByDayCkBox.isSelected()) {
-                    isCaculatedByDay = true;
+                    isCalculatedByDay = true;
                 }
                 else {
-                    isCaculatedByDay = false;
+                    isCalculatedByDay = false;
                 }
 
             }
@@ -369,6 +359,7 @@ public class RequestPage extends JFrame{
 
 
     private void createUIComponents() throws ParseException {
+        // Input Formatting Date of Birth field
         MaskFormatter mf = new MaskFormatter("####/##/##");
         mf.setValidCharacters("0123456789");
         mf.setPlaceholderCharacter('_');
@@ -378,86 +369,70 @@ public class RequestPage extends JFrame{
 
     private void showResults() {
         Params.DataType dataType;
-        //resultTxt.setText("[입력에 대한 결과]");
-        String str = "<html><h3>[입력에 대한 결과]</h3>";
+        GrowthInfo gi;
+        float p;
 
         if(birthWeight>0) {
             if(gender==Params.Gender.MALE) dataType = Params.DataType.WEIGHT_MALE;
             else dataType = Params.DataType.WEIGHT_FEMALE;
-            GrowthInfo gi = dm.getGrowthInfo(dataType, 0, isCaculatedByDay);
-            str += "<br>출생시 체중("+birthWeight+"kg)의 퍼센타일 : ";
+            gi = dm.getGrowthInfo(dataType, 0, isCalculatedByDay);
             if(gi!=null) {
-                float p = Utils.getNormalDistribute(gi, birthWeight);
-                str += String.format("%.2f", p * 100) + "p<br>";
+                p = Utils.getNormalDistribute(gi, birthWeight);
             }
             else {
-                str += "<br>해당 년령의 데이터가 없습니다.";
+                p = -1;
             }
+            rv.setBirthWeight(birthWeight, p);
         }
 
-        if(height>0) {
-            if(gender==Params.Gender.MALE) dataType = Params.DataType.HEIGHT_MALE;
-            else dataType = Params.DataType.HEIGHT_FEMALE;
-            GrowthInfo gi = dm.getGrowthInfo(dataType, ageByDay, isCaculatedByDay);
-            if(gi!=null) {
-                float p = Utils.getNormalDistribute(gi, height);
-                str += "<br>신장 퍼센타일: " + String.format("%.2f", p * 100) + "p";
-                str +="<br> [ 3p:"+gi.getP3()+", 5p:"+gi.getP5()+", 10p:"+gi.getP10()+", "
-                        +"25p:"+gi.getP25()+", 50p:"+gi.getP50()+", 75p:"+gi.getP75()+", "
-                        +"90p:"+gi.getP90()+", 95p:"+gi.getP95()+", 97p:"+gi.getP97()+" ]";
-            }
-            else {
-                str += "<br>해당 년령의 신장 데이터가 없습니다.";
-            }
+        // Getting Height data
+        if(gender==Params.Gender.MALE) dataType = Params.DataType.HEIGHT_MALE;
+        else dataType = Params.DataType.HEIGHT_FEMALE;
+        gi = dm.getGrowthInfo(dataType, ageByDay, isCalculatedByDay);
+        if((gi!=null) && (height>0)) {
+            p = Utils.getNormalDistribute(gi, height);
         }
+        else {
+           p = -1;
+        }
+        rv.setHeight(gi, height, p);
 
-        if(weight>0) {
-            if(gender==Params.Gender.MALE) dataType = Params.DataType.WEIGHT_MALE;
-            else dataType = Params.DataType.WEIGHT_FEMALE;
-            GrowthInfo gi = dm.getGrowthInfo(dataType, ageByDay, isCaculatedByDay);
-            if(gi!=null) {
-                float p = Utils.getNormalDistribute(gi, weight);
-                str += "<br>체중 퍼센타일: " + String.format("%.2f",p*100) + "p";
-                str +="<br> [ 3p:"+gi.getP3()+", 5p:"+gi.getP5()+", 10p:"+gi.getP10()+", "
-                        +"25p:"+gi.getP25()+", 50p:"+gi.getP50()+", 75p:"+gi.getP75()+", "
-                        +"90p:"+gi.getP90()+", 95p:"+gi.getP95()+", 97p:"+gi.getP97()+" ]";
-            }
-            else {
-                str += "<br>해당 년령의 체중 데이터가 없습니다.";
-            }
+        // Getting Weight data
+        if(gender==Params.Gender.MALE) dataType = Params.DataType.WEIGHT_MALE;
+        else dataType = Params.DataType.WEIGHT_FEMALE;
+        gi = dm.getGrowthInfo(dataType, ageByDay, isCalculatedByDay);
+        if((gi!=null) && (weight>0)) {
+            p = Utils.getNormalDistribute(gi, weight);
         }
+        else {
+            p = -1;
+        }
+        rv.setWeight(gi, weight, p);
 
-        if(head>0) {
-            if(gender==Params.Gender.MALE) dataType = Params.DataType.HEAD_MALE;
-            else dataType = Params.DataType.HEAD_FEMALE;
-            GrowthInfo gi = dm.getGrowthInfo(dataType, ageByDay, isCaculatedByDay);
-            if(gi!=null) {
-                float p = Utils.getNormalDistribute(gi, head);
-                str += "<br>두위 퍼센타일: " + String.format("%.2f",p*100) + "p";
-                str +="<br> [ 3p:"+gi.getP3()+", 5p:"+gi.getP5()+", 10p:"+gi.getP10()+", "
-                        +"25p:"+gi.getP25()+", 50p:"+gi.getP50()+", 75p:"+gi.getP75()+", "
-                        +"90p:"+gi.getP90()+", 95p:"+gi.getP95()+", 97p:"+gi.getP97()+" ]";
-            }
-            else {
-                str += "<br>해당 년령의 두위 데이터가 없습니다.";
-            }
+        // Getting Head data
+        if(gender==Params.Gender.MALE) dataType = Params.DataType.HEAD_MALE;
+        else dataType = Params.DataType.HEAD_FEMALE;
+        gi = dm.getGrowthInfo(dataType, ageByDay, isCalculatedByDay);
+        if((gi!=null) && (head>0)) {
+            p = Utils.getNormalDistribute(gi, head);
         }
+        else {
+            p = -1;
+        }
+        rv.setHead(gi, head, p);
 
-        if(bmi>0) {
-            if(gender==Params.Gender.MALE) dataType = Params.DataType.BMI_MALE;
-            else dataType = Params.DataType.BMI_FEMALE;
-            GrowthInfo gi = dm.getGrowthInfo(dataType, ageByDay, isCaculatedByDay);
-            if(gi!=null) {
-                float p = Utils.getNormalDistribute(gi, bmi);
-                str += "<br>BMI 퍼센타일: " + String.format("%.2f",p*100) + "p";
-                str +="<br> [ 3p:"+gi.getP3()+", 5p:"+gi.getP5()+", 10p:"+gi.getP10()+", "
-                        +"25p:"+gi.getP25()+", 50p:"+gi.getP50()+", 75p:"+gi.getP75()+", "
-                        +"90p:"+gi.getP90()+", 95p:"+gi.getP95()+", 97p:"+gi.getP97()+" ]";
-            }
-            else {
-                str += "<br>해당 년령의 BMI 데이터가 없습니다.";
-            }
+        // Getting BMI data
+        if(gender==Params.Gender.MALE) dataType = Params.DataType.BMI_MALE;
+        else dataType = Params.DataType.BMI_FEMALE;
+        gi = dm.getGrowthInfo(dataType, ageByDay, isCalculatedByDay);
+        if((gi!=null) && (bmi>0)) {
+            p = Utils.getNormalDistribute(gi, bmi);
         }
-        resultTxt.setText(str+"</html>");
+        else {
+            p = -1;
+        }
+        rv.setBmi(gi, bmi, p);
+
+        resultTxt.setText(rv.getResultView(gender, ageByDay));
     }
 }

@@ -12,7 +12,9 @@ import java.util.Map;
 import java.util.logging.Level;
 
 /**
- * Created by bbybby on 6/15/2016.
+ * Created by Jieun Choi on 6/15/2016.
+ *
+ * class for Data Management
  */
 public class DataManager {
     private Map<Params.DataType, Map<String, GrowthInfo>> giMap;
@@ -65,7 +67,7 @@ public class DataManager {
                         str[4], str[5], str[6], str[7], str[8],
                         str[9], str[10], str[11], str[12]);
 
-                map.put(str[0], gi);
+                map.put(str[0], gi); // str[0] is key (age by months)
             }
         } catch(NumberFormatException e) {
             Utils.LOGGER.log(Level.SEVERE, e.getMessage());
@@ -126,7 +128,7 @@ public class DataManager {
             gi_neighbor = map.get(String.valueOf(olderAge));
         }
 
-        gi_result = getApproximateValue(gi, gi_neighbor, ageByDay);
+        gi_result = getAdjustedObject(gi, gi_neighbor, ageByDay);
 
         if(gi_result == null) {   //
             Utils.showMessage("근사값을 구할 수 없어서 기준월령값("+medianMonthKey+"개월)으로 표시합니다.");
@@ -140,12 +142,12 @@ public class DataManager {
     }
 
     /*
-     getting the approximate value using a linear equation (y = mx + b)
+     getting a GrowthInfo object with the approximate percentile according to the age
       */
-    private GrowthInfo getApproximateValue(GrowthInfo gi, GrowthInfo gi_neighbor, int ageByDay) {
+    private GrowthInfo getAdjustedObject(GrowthInfo gi, GrowthInfo gi_neighbor, int ageByDay) {
         if(gi_neighbor == null) return null;
         if(gi == null) {
-            Utils.LOGGER.log(Level.WARNING, "Object of GrowthInfo should not be null in getApproximateValue()");
+            Utils.LOGGER.log(Level.WARNING, "Object of GrowthInfo should not be null in getAdjustedValue()");
             return null;
         }
 
@@ -181,11 +183,4 @@ public class DataManager {
 
         return result_gi;
     }
-
-    /*
-    public DataManager getInstance() {
-        Utils.LOGGER.info("return instance of DataManager");
-        return new DataManager();
-    }
-    */
 }

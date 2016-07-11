@@ -4,15 +4,15 @@ import org.apache.commons.math3.distribution.NormalDistribution;
 
 import javax.swing.*;
 import java.awt.event.KeyEvent;
-import java.text.SimpleDateFormat;
 import java.time.DateTimeException;
 import java.time.LocalDate;
-import java.util.Calendar;
-import java.util.Date;
+import java.time.Period;
 import java.util.logging.Logger;
 
 /**
- * Created by bbybby on 6/13/2016.
+ * Created by Jieun Choi on 6/13/2016.
+ *
+ * class for utilities
  */
 public class Utils {
     public static final Logger LOGGER = Logger.getLogger(Main.class.getName());
@@ -53,25 +53,21 @@ public class Utils {
         return result;
     }
 
-    public static int getDayBetweenDates(int fromYear, int fromMonth, int fromDay, int toYear, int toMonth, int toDay) {
-        int days = -1;
+    public static String getAgeLabel(LocalDate begin, LocalDate end, int ageByDay) {
+        String label = "";
 
-        try {
-            String begin = String.format("%d%02d%02d", fromYear, fromMonth, fromDay);
-            String end = String.format("%d%02d%02d", toYear, toMonth, toDay);
-            Utils.log("begin:"+begin);
-            Utils.log("end:"+end);
-            SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
-            Date beginDate = formatter.parse(begin);
-            Date endDate = formatter.parse(end);
+        Period p = Period.between(begin, end);
+        int years = p.getYears();
+        int months = p.getMonths();
+        int days = p.getDays();
 
-            days = (int)((endDate.getTime() - beginDate.getTime()) / (24 * 60 * 60 * 1000));
-        }
-        catch (Exception e){
-            Utils.LOGGER.warning("parse error in getDayBetweenDates():"+e.getMessage());
-        }
+        int total_months = years*12 + months;
 
-        return days;
+        if(years>0) label += years + "년 ";
+        if(months>0) label += months + "개월 ";
+        label += days + "일     [ " + total_months + "개월 ("+ ageByDay + "일) ]";
+
+        return label;
     }
 
     public static float getNormalDistribute(GrowthInfo gi, float value) {
