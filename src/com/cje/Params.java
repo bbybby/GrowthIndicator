@@ -1,5 +1,7 @@
 package com.cje;
 
+import java.io.File;
+
 /**
  * Created by Jieun Choi on 6/13/2016.
  *
@@ -8,8 +10,6 @@ package com.cje;
 public class Params {
     public static final int MAX_INPUT_LENGTH = 6;
 
-    public static final String FILE_PATH = "";
-    //public static final String FILE_PATH = "C:\\Users\\bbybby\\Works\\Programming\\Projects\\GrowthIndicator\\data\\";
     public static final String FIELD_DIVIDER = ",";
     public static final int FIELD_CNT = 13;
     public enum Gender { MALE, FEMALE, NONE };

@@ -1,9 +1,6 @@
 package com.cje;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -18,10 +15,14 @@ import java.util.logging.Level;
  */
 public class DataManager {
     private Map<Params.DataType, Map<String, GrowthInfo>> giMap;
+    private String FILE_PATH;
 
     public DataManager() {
         //giMap = new HashMap<Params.DataType, Map<String, GrowthInfo>>();
         giMap = new HashMap<>();
+
+        File f = new File(DataManager.class.getProtectionDomain().getCodeSource().getLocation().getPath());
+        FILE_PATH = f.getAbsolutePath() + "\\";
     }
 
     // Read data from files
@@ -47,7 +48,7 @@ public class DataManager {
     public Map<String, GrowthInfo> readFile(String filename) {
         Map<String, GrowthInfo> map = new HashMap<>();
 
-        Path file = Paths.get(Params.FILE_PATH+ filename);
+        Path file = Paths.get(FILE_PATH+ filename);
 
         try {
             InputStream in = Files.newInputStream(file);
