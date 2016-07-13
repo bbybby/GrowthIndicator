@@ -17,12 +17,17 @@ public class DataManager {
     private Map<Params.DataType, Map<String, GrowthInfo>> giMap;
     private String FILE_PATH;
 
+    private boolean isRunWithJarFile = false;   // executed with Jar file  otherwise IDE (executed with class file)
+
     public DataManager() {
         //giMap = new HashMap<Params.DataType, Map<String, GrowthInfo>>();
         giMap = new HashMap<>();
 
         File f = new File(DataManager.class.getProtectionDomain().getCodeSource().getLocation().getPath());
         FILE_PATH = f.getAbsolutePath() + "\\";
+        if(f.isFile()) {
+            isRunWithJarFile = true;
+        }
     }
 
     // Read data from files
@@ -47,11 +52,19 @@ public class DataManager {
 
     public Map<String, GrowthInfo> readFile(String filename) {
         Map<String, GrowthInfo> map = new HashMap<>();
-
-        Path file = Paths.get(FILE_PATH+ filename);
+        Path file;
+        InputStream in;
 
         try {
-            InputStream in = Files.newInputStream(file);
+            // When users execute this program with Jar file, the way accesses files needs to be different
+            if(isRunWithJarFile) {
+                ClassLoader classLoader = getClass().getClassLoader();
+                in = classLoader.getResourceAsStream(filename);
+            }
+            else {
+                file = Paths.get(FILE_PATH + filename);
+                in = Files.newInputStream(file);
+            }
             BufferedReader reader = new BufferedReader(new InputStreamReader(in));
             String line = null;
 
@@ -85,6 +98,7 @@ public class DataManager {
     }
 
     /*
+    returns the GrowthInfo object searched by data type & age
      */
     public GrowthInfo getGrowthInfo(Params.DataType dataType, int ageByDay, boolean isCalculatedByDay) {
         GrowthInfo gi = null;
@@ -98,11 +112,9 @@ public class DataManager {
 
         if(isCalculatedByDay) { // get approximate data based on the age by days
             gi = getAdjustedGrowthInfo(map, ageByDay, medianMonthKey);
-            Utils.LOGGER.info("Getting approximate value by days ["+ageByDay+"]");
         }
         else {  // get data based on the age by months
             gi = map.get(String.valueOf(medianMonthKey));
-            Utils.LOGGER.info("Getting data from key value");
         }
         return gi;
     }

@@ -86,7 +86,6 @@ public class Utils {
 
         NormalDistribution nd = new NormalDistribution();
         res = nd.cumulativeProbability(z);
-        Utils.log("L:"+L+", M:"+M+", S:"+S+",  z:"+z+", res:"+res);
 
         return (float)res;
     }

@@ -230,7 +230,6 @@ public class RequestPage extends JFrame{
                     birthYear = Integer.parseInt(str[0]);
                     birthMonth = Integer.parseInt(str[1]);
                     birthDay = Integer.parseInt(str[2]);
-                   Utils.log("Birth year:"+birthYear +", month:"+birthMonth+", day:"+birthDay);
                 } catch(Exception ex) {
                     birthDateTxt.setText("");
                     birthDateTxt.requestFocus();
@@ -240,8 +239,6 @@ public class RequestPage extends JFrame{
                 if(Utils.isValidDate(birthYear, birthMonth, birthDay)) {
                     LocalDate birthday = LocalDate.of(birthYear, birthMonth, birthDay);
                     ageByDay = (int) ChronoUnit.DAYS.between(birthday, today);
-
-                    Utils.log("LocalDate]"+birthday.getYear()+":"+birthday.getMonthValue()+":"+birthday.getDayOfMonth()+":"+birthday.getDayOfWeek());
 
                     if(ageByDay<0) {
                         Utils.showMessage("The Date should be earlier than today");

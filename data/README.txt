@@ -1,9 +1,8 @@
 GrowthIndicator
 ********************************************************************************************
 * Developed by Jieun Choi
-* Date : 2016.7.11.
+* Date : 2016.7.12.
 * version : 1.0
-* Jieun Choi has the copyright
 ********************************************************************************************
 * Program Requirements
 1. 8 Data files should be in the directory. Names are like below :

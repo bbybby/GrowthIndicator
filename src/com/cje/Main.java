@@ -1,9 +1,5 @@
 package com.cje;
 
-import oracle.jrockit.jfr.JFR;
-
-import javax.swing.*;
-
 public class Main {
 
     public static void main(String[] args) {
