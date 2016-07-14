@@ -44,8 +44,6 @@ public class RequestPage extends JFrame{
     private int birthMonth;
     private int birthDay;
     private LocalDate today;
-    private int cMonth;
-    private int cDay;
 
     private float birthWeight;
     private float height;
