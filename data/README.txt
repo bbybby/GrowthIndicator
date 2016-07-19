@@ -1,8 +1,9 @@
 GrowthIndicator
 ********************************************************************************************
 * Developed by Jieun Choi
-* Date : 2016.7.12.
-* version : 1.0
+* Date : 2016.7.18.
+* version : 0.1
+* Required environment : Java Runtime Environment jre 1.8 (or higher version)
 ********************************************************************************************
 * Program Requirements
 1. 8 Data files should be in the directory. Names are like below :
