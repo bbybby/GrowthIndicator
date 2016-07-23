@@ -165,6 +165,11 @@ public class ResultView {
     public String getResultView(Params.Gender gender, int ageByDay) {
         String strView = HEADER;
 
+        strView += "[ 나이:" + ageByDay + "일, 성별:";
+        if(gender == Params.Gender.MALE) strView += "남";
+        else if(gender == Params.Gender.FEMALE) strView += "여";
+        strView += " ] 성장 지표";
+
         strView += getMeasuredDataTable();
 
         strView += "<br>" + getPercentileTable();

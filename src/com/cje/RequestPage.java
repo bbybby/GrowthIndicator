@@ -1,8 +1,14 @@
 package com.cje;
 
+import javax.rmi.CORBA.Util;
 import javax.swing.*;
 import javax.swing.text.MaskFormatter;
+import java.awt.*;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
 import java.awt.event.*;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
@@ -28,13 +34,14 @@ public class RequestPage extends JFrame{
     private JButton viewBtn;
     private JFormattedTextField birthWeightTxt;
     private JLabel ageTxt;
-    private JLabel todayTxt;
+    private JLabel baseDateTxt;
     private JFormattedTextField birthDateTxt;
     private JButton resetBtn;
     private JButton exitBtn;
     private JPanel resultPanel;
     private JLabel resultTxt;
     private JCheckBox calculateByDayCkBox;
+    private JButton changeDateBtn;
     private JLabel ageLabel;
 
     private DataManager dm;
@@ -43,7 +50,7 @@ public class RequestPage extends JFrame{
     private int birthYear;
     private int birthMonth;
     private int birthDay;
-    private LocalDate today;
+    private LocalDate baseDate;
 
     private float birthWeight;
     private float height;
@@ -68,6 +75,8 @@ public class RequestPage extends JFrame{
         weight = -1;
         head = -1;
         bmi = -1;
+
+        setBaseDate(LocalDate.now());
     }
 
     private void init() {
@@ -90,8 +99,6 @@ public class RequestPage extends JFrame{
     public RequestPage() {
         super("Growth Indicator");
 
-        today = LocalDate.now();
-        todayTxt.setText("[기준일] "+today.getYear()+"년 "+today.getMonthValue()+"월 "+today.getDayOfMonth()+"일");
 
         setContentPane(mainPanel);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -222,29 +229,38 @@ public class RequestPage extends JFrame{
             @Override
             public void focusLost(FocusEvent e) {
                 super.focusLost(e);
+                int y = -1;
+                int m = -1;
+                int d = -1;
 
                 String[] str = birthDateTxt.getText().replaceAll("_","").split("/");
+                Utils.log("birthDateTxt:"+birthDateTxt.getText());
                 try {
-                    birthYear = Integer.parseInt(str[0]);
-                    birthMonth = Integer.parseInt(str[1]);
-                    birthDay = Integer.parseInt(str[2]);
+                    y = Integer.parseInt(str[0]);
+                    m = Integer.parseInt(str[1]);
+                    d = Integer.parseInt(str[2]);
                 } catch(Exception ex) {
                     birthDateTxt.setText("");
                     birthDateTxt.requestFocus();
                     return;
                 }
 
-                if(Utils.isValidDate(birthYear, birthMonth, birthDay)) {
-                    LocalDate birthday = LocalDate.of(birthYear, birthMonth, birthDay);
-                    ageByDay = (int) ChronoUnit.DAYS.between(birthday, today);
+                if(Utils.isValidDate(y, m, d)) {
+                    LocalDate birthday = LocalDate.of(y, m, d);
+                    int gap = (int) ChronoUnit.DAYS.between(birthday, baseDate);
 
-                    if(ageByDay<0) {
-                        Utils.showMessage("The Date should be earlier than today");
+                    if(gap<0) {
+                        Utils.showMessage("The Date should be earlier than the Base Date");
                         birthDateTxt.requestFocus();
                         return;
                     }
 
-                    ageTxt.setText(Utils.getAgeLabel(birthday, today, ageByDay));
+                    // Setting valid Date of Birth & Age
+                    birthYear = y;
+                    birthMonth = m;
+                    birthDay = d;
+                    ageByDay = gap;
+                    ageTxt.setText(Utils.getAgeLabel(birthday, baseDate, ageByDay));
                 }
                 else {
                     Utils.showMessage("Please check the date");
@@ -324,10 +340,9 @@ public class RequestPage extends JFrame{
                     weightTxt.setText("");
                     headTxt.setText("");
                     bmiTxt.setText("");
-                    resultTxt.setText("");
 
                     initParam();
-                    rv.cleanView();
+                    cleanView();
             }
         });
         exitBtn.addActionListener(new ActionListener() {
@@ -350,8 +365,137 @@ public class RequestPage extends JFrame{
 
             }
         });
+        resultTxt.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                super.mouseClicked(e);
+
+                if(e.getClickCount() == 2) {
+                    String myString = "Jieun Choi";
+                    StringSelection stringSelection = new StringSelection(myString);
+                    Clipboard clpbrd = Toolkit.getDefaultToolkit().getSystemClipboard();
+                    clpbrd.setContents(stringSelection, null);
+                }
+            }
+        });
+
+        changeDateBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                showChangeDateDialog();
+            }
+        });
     }
 
+    private void setBaseDate(LocalDate newDate) {
+        baseDate = newDate;
+        baseDateTxt.setText("[기준일] "+baseDate.getYear()+"년 "+baseDate.getMonthValue()+"월 "+baseDate.getDayOfMonth()+"일");
+        if(ageByDay != -1) {    // System already has the Birth date and Age, so we need to update
+            LocalDate birthday = LocalDate.of(birthYear, birthMonth, birthDay);
+            ageByDay = (int) ChronoUnit.DAYS.between(birthday, baseDate);
+
+            ageTxt.setText(Utils.getAgeLabel(birthday, baseDate, ageByDay));
+        }
+    }
+
+    private void showChangeDateDialog() {
+        String msg = "기준일을 입력해 주세요";
+        MaskFormatter mf;
+
+        try {
+            mf = new MaskFormatter("####/##/##");
+            mf.setValidCharacters("0123456789");
+            mf.setPlaceholderCharacter('_');
+            mf.setAllowsInvalid(false);
+        }
+        catch (ParseException e) {
+            Utils.LOGGER.log(Level.SEVERE, "Error in showChangeDateDialog");
+            Utils.showMessage("Parsing Error");
+            return;
+        }
+        JFormattedTextField dateTxt = new JFormattedTextField(mf);
+        JPanel panel = new JPanel(new FlowLayout());    // for adjusting the size of dateTxt
+        dateTxt.setColumns(0);
+        panel.add(dateTxt);
+
+        Object [] array = { msg, panel };
+        Object [] options = { "OK", "Cancel"};
+
+        JOptionPane optionPane = new JOptionPane(array, JOptionPane.QUESTION_MESSAGE, JOptionPane.YES_NO_OPTION,
+                null, options, options[0]);
+
+        final JDialog dialog = new JDialog(new JFrame(), "Click a button", true);
+        dialog.setTitle("기준일 변경");
+        dialog.setLocationRelativeTo(this);
+
+        optionPane.addPropertyChangeListener(new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent evt) {
+                String prop = evt.getPropertyName();
+
+                if (isVisible() && (evt.getSource() == optionPane)
+                        && (JOptionPane.VALUE_PROPERTY.equals(prop) ||
+                        JOptionPane.INPUT_VALUE_PROPERTY.equals(prop))) {
+                    Object value = optionPane.getValue();
+
+                    if (value == JOptionPane.UNINITIALIZED_VALUE) {
+                        //ignore reset
+                        return;
+                    }
+
+                    //Reset the JOptionPane's value.
+                    //If you don't do this, then if the user presses the same button next time,
+                    //no property change event will be fired.
+                    optionPane.setValue(JOptionPane.UNINITIALIZED_VALUE);
+
+                    if(value.toString().equals(options[0])) {
+                        int y, m, d;
+                        String[] str = dateTxt.getText().replaceAll("_","").split("/");
+                        try {
+                            y = Integer.parseInt(str[0]);
+                            m = Integer.parseInt(str[1]);
+                            d = Integer.parseInt(str[2]);
+                        } catch(Exception ex) {
+                            dateTxt.setText("");
+                            dateTxt.requestFocus();
+
+                            return;
+                        }
+                        if(Utils.isValidDate(y, m, d)) {
+                            if(ageByDay != -1) {    // If the system has Birth Date and Age
+                                int gap = (int) ChronoUnit.DAYS.between(LocalDate.of(birthYear, birthMonth, birthDay),
+                                        LocalDate.of(y,m,d));
+
+                                if(gap<0) {
+                                    Utils.showMessage("The Date should be later than the Birth Date");
+                                    birthDateTxt.requestFocus();
+                                    return;
+                                }
+
+                            }
+
+                            setBaseDate(LocalDate.of(y, m, d));
+                            cleanView();
+                            Utils.showMessage("기준일이 변경되었습니다.");
+                            dialog.dispose();
+                        }
+                        else {
+                            Utils.showMessage("Please check the date");
+                        }
+                    }
+                    else {
+                        dialog.dispose();
+                    }
+
+                    //dialog.setVisible(false);
+                }
+            }
+        });
+
+        dialog.setContentPane(optionPane);
+        dialog.pack();
+        dialog.setVisible(true);
+    }
 
     private void createUIComponents() throws ParseException {
         // Input Formatting Date of Birth field
@@ -360,6 +504,11 @@ public class RequestPage extends JFrame{
         mf.setPlaceholderCharacter('_');
         mf.setAllowsInvalid(false);
         birthDateTxt = new JFormattedTextField(mf);
+    }
+
+    private  void cleanView() {
+        resultTxt.setText("");
+        rv.cleanView();
     }
 
     private void showResults() {

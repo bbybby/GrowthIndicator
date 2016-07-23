@@ -13,8 +13,8 @@
       <grid id="52e0" layout-manager="BorderLayout" hgap="0" vgap="0">
         <constraints border-constraint="North"/>
         <properties>
-          <minimumSize width="520" height="200"/>
-          <preferredSize width="520" height="220"/>
+          <minimumSize width="520" height="250"/>
+          <preferredSize width="520" height="250"/>
         </properties>
         <border type="none"/>
         <children>
@@ -23,10 +23,10 @@
             <properties>
               <font/>
               <maximumSize width="500" height="300"/>
-              <minimumSize width="500" height="200"/>
-              <preferredSize width="500" height="230"/>
+              <minimumSize width="500" height="250"/>
+              <preferredSize width="500" height="250"/>
             </properties>
-            <border type="line"/>
+            <border type="etched"/>
             <children>
               <component id="ca743" class="javax.swing.JLabel">
                 <constraints>
@@ -37,6 +37,8 @@
                   <enabled value="true"/>
                   <font/>
                   <horizontalAlignment value="0"/>
+                  <minimumSize width="30" height="25"/>
+                  <preferredSize width="30" height="25"/>
                   <text value="성별"/>
                 </properties>
               </component>
@@ -66,6 +68,8 @@
                       <gridbag weightx="0.0" weighty="0.0"/>
                     </constraints>
                     <properties>
+                      <minimumSize width="54" height="25"/>
+                      <preferredSize width="54" height="25"/>
                       <text value="여"/>
                     </properties>
                   </component>
@@ -73,21 +77,26 @@
               </grid>
               <component id="db8f3" class="javax.swing.JLabel">
                 <constraints>
-                  <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+                  <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
                   <gridbag weightx="0.0" weighty="1.0"/>
                 </constraints>
                 <properties>
                   <horizontalAlignment value="0"/>
                   <horizontalTextPosition value="0"/>
+                  <minimumSize width="45" height="25"/>
+                  <preferredSize width="45" height="25"/>
                   <text value="출생일"/>
                 </properties>
               </component>
               <grid id="fb313" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="3">
                 <constraints>
-                  <grid row="1" column="2" row-span="1" col-span="6" vsize-policy="3" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                  <grid row="1" column="2" row-span="1" col-span="7" vsize-policy="3" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                   <gridbag weightx="1.0" weighty="1.0"/>
                 </constraints>
-                <properties/>
+                <properties>
+                  <minimumSize width="252" height="30"/>
+                  <preferredSize width="272" height="30"/>
+                </properties>
                 <border type="none"/>
                 <children>
                   <component id="37c0d" class="javax.swing.JFormattedTextField" binding="birthDateTxt" custom-create="true">
@@ -96,8 +105,8 @@
                       <alignmentX value="0.5"/>
                       <focusLostBehavior value="3"/>
                       <font size="14"/>
-                      <minimumSize width="100" height="23"/>
-                      <preferredSize width="120" height="23"/>
+                      <minimumSize width="90" height="25"/>
+                      <preferredSize width="90" height="25"/>
                       <text value=""/>
                     </properties>
                   </component>
@@ -116,15 +125,20 @@
                 </constraints>
                 <properties>
                   <horizontalAlignment value="0"/>
+                  <minimumSize width="65" height="25"/>
+                  <preferredSize width="65" height="25"/>
                   <text value="금일 측정"/>
                 </properties>
               </component>
               <grid id="d8090" layout-manager="GridBagLayout">
                 <constraints>
-                  <grid row="4" column="2" row-span="1" col-span="6" vsize-policy="3" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                  <grid row="4" column="2" row-span="1" col-span="7" vsize-policy="3" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                   <gridbag weightx="1.0" weighty="1.0"/>
                 </constraints>
-                <properties/>
+                <properties>
+                  <minimumSize width="424" height="39"/>
+                  <preferredSize width="520" height="39"/>
+                </properties>
                 <border type="line"/>
                 <children>
                   <component id="862ac" class="javax.swing.JLabel">
@@ -284,13 +298,13 @@
               </hspacer>
               <hspacer id="2bb16">
                 <constraints>
-                  <grid row="4" column="8" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                  <grid row="4" column="9" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                   <gridbag weightx="0.0" weighty="0.0"/>
                 </constraints>
               </hspacer>
               <grid id="7412b" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
                 <constraints>
-                  <grid row="0" column="4" row-span="1" col-span="3" vsize-policy="3" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                  <grid row="0" column="4" row-span="1" col-span="4" vsize-policy="3" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                   <gridbag weightx="0.0" weighty="0.0"/>
                 </constraints>
                 <properties>
@@ -311,7 +325,8 @@
                     <properties>
                       <columns value="6"/>
                       <editable value="true"/>
-                      <preferredSize width="88" height="23"/>
+                      <minimumSize width="4" height="25"/>
+                      <preferredSize width="88" height="25"/>
                       <text value=""/>
                       <verifyInputWhenFocusTarget value="true"/>
                     </properties>
@@ -332,6 +347,7 @@
                 <properties>
                   <horizontalAlignment value="0"/>
                   <horizontalTextPosition value="0"/>
+                  <minimumSize width="30" height="25"/>
                   <preferredSize width="30" height="35"/>
                   <text value="나이"/>
                 </properties>
@@ -347,15 +363,6 @@
                   <text value=""/>
                 </properties>
               </component>
-              <component id="be433" class="javax.swing.JLabel" binding="todayTxt">
-                <constraints>
-                  <grid row="2" column="4" row-span="1" col-span="3" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
-                  <gridbag weightx="0.0" weighty="0.0"/>
-                </constraints>
-                <properties>
-                  <text value=""/>
-                </properties>
-              </component>
               <component id="21c6" class="javax.swing.JButton" binding="resetBtn">
                 <constraints>
                   <grid row="6" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
@@ -368,7 +375,7 @@
               </component>
               <component id="68a6" class="javax.swing.JButton" binding="exitBtn">
                 <constraints>
-                  <grid row="6" column="6" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                  <grid row="6" column="6" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                   <gridbag weightx="0.0" weighty="0.0"/>
                 </constraints>
                 <properties>
@@ -413,6 +420,29 @@
                   <gridbag weightx="0.0" weighty="0.0"/>
                 </constraints>
               </vspacer>
+              <component id="be433" class="javax.swing.JLabel" binding="baseDateTxt">
+                <constraints>
+                  <grid row="2" column="4" row-span="1" col-span="3" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                  <gridbag weightx="0.0" weighty="0.0"/>
+                </constraints>
+                <properties>
+                  <text value="[기준일]"/>
+                </properties>
+              </component>
+              <component id="b30f7" class="javax.swing.JButton" binding="changeDateBtn">
+                <constraints>
+                  <grid row="2" column="7" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
+                  <gridbag weightx="0.0" weighty="0.0"/>
+                </constraints>
+                <properties>
+                  <icon value="calendar.png"/>
+                  <minimumSize width="50" height="25"/>
+                  <preferredSize width="50" height="25"/>
+                  <selected value="false"/>
+                  <text value=""/>
+                  <toolTipText value="기준날짜 변경"/>
+                </properties>
+              </component>
             </children>
           </grid>
           <component id="dc734" class="javax.swing.JLabel">
@@ -443,6 +473,7 @@
               <horizontalAlignment value="2"/>
               <horizontalTextPosition value="2"/>
               <text value=""/>
+              <toolTipText value="Double click to copy contents"/>
               <verticalAlignment value="1"/>
               <verticalTextPosition value="1"/>
             </properties>
