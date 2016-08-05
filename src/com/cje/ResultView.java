@@ -19,6 +19,8 @@ public class ResultView {
 
     private float birthWeight;
     private String birthWeightPercentile;
+    private float birthHeight;
+    private String birthHeightPercentile;
     private float height;
     private String heightPercentile;
     private float weight;
@@ -38,6 +40,8 @@ public class ResultView {
     private void initParam() {
         birthWeight = -1;
         birthWeightPercentile = "";
+        birthHeight = -1;
+        birthHeightPercentile = "";
         height = -1;
         heightPercentile = "";
         weight = -1;
@@ -60,6 +64,15 @@ public class ResultView {
             else birthWeightPercentile = "";
         }
         else birthWeightPercentile = String.format("%.2f",p*100) + "p";
+    }
+
+    public void setBirthHeight(float bh, float p) {
+        birthHeight = bh;
+        if(p == -1) {
+            if(birthHeight>0) birthHeightPercentile = NO_DATA_MSG;
+            else birthHeightPercentile = "";
+        }
+        else birthHeightPercentile = String.format("%.2f",p*100) + "p";
     }
 
     public void setHeight(GrowthInfo gi, float h, float p) {
@@ -104,10 +117,13 @@ public class ResultView {
 
     private String getMeasuredDataTable() {
         String strView = "<table> <tr>"
-                + "<th></th> <th>출생체중 (kg)</th> <th>신장 (cm)</th> <th>체중 (kg)</th> <th>두위 (cm)</th> <th>BMI</th>"
+                + "<th></th> <th>출생체중(kg)</th> <th>출생신장(cm)</th>"
+                + "<th>신장 (cm)</th> <th>체중 (kg)</th> <th>두위 (cm)</th> <th>BMI</th>"
                 + "</tr>";
         strView += "<tr><th>측정치</th><td>";
         if(birthWeight>0) strView += birthWeight;
+        strView += "</td><td>";
+        if(birthHeight>0) strView += birthHeight;
         strView += "</td><td>";
         if(height>0) strView += height;
         strView += "</td><td>";
@@ -119,6 +135,7 @@ public class ResultView {
         strView += "</td></tr>"
                 + "<tr><th>퍼센타일</th>"
                 + "<td>" + birthWeightPercentile + "</td>"
+                + "<td>" + birthHeightPercentile + "</td>"
                 + "<td>" + heightPercentile + "</td>"
                 + "<td>" + weightPercentile + "</td>"
                 + "<td>" + headPercentile + "</td>"
@@ -177,6 +194,18 @@ public class ResultView {
         strView += TAIL;
 
         return strView;
+    }
+
+    public String getInformationNotes() {
+        String str = "";
+        if(birthWeight>0) str += "출생체중:"+birthWeight+"kg ("+birthWeightPercentile+")\n";
+        if(birthHeight>0) str += "출생신장:"+birthHeight+"cm ("+birthHeightPercentile+")\n";
+        if(height>0) str+= "신장:"+height+"cm ("+heightPercentile+")\n";
+        if(weight>0) str+= "체중:"+weight+"kg ("+weightPercentile+")\n";
+        if(head>0) str += "두위:"+head+"cm ("+headPercentile+")\n";
+        if(bmi>0) str += "BMI:"+bmi+" ("+bmiPercentile+")\n";
+
+        return str;
     }
 
     public void cleanView() {

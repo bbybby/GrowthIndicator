@@ -33,6 +33,7 @@ public class RequestPage extends JFrame{
     private JFormattedTextField bmiTxt;
     private JButton viewBtn;
     private JFormattedTextField birthWeightTxt;
+    private JFormattedTextField birthHeightTxt;
     private JLabel ageTxt;
     private JLabel baseDateTxt;
     private JFormattedTextField birthDateTxt;
@@ -53,6 +54,7 @@ public class RequestPage extends JFrame{
     private LocalDate baseDate;
 
     private float birthWeight;
+    private float birthHeight;
     private float height;
     private float weight;
     private float head;
@@ -71,6 +73,7 @@ public class RequestPage extends JFrame{
         ageByDay = -1;
 
         birthWeight = -1;
+        birthHeight = -1;
         height = -1;
         weight = -1;
         head = -1;
@@ -137,6 +140,21 @@ public class RequestPage extends JFrame{
                 }
                 else {
                     birthWeight = -1;
+                }
+
+                // Check Height at Birth
+                if(birthHeightTxt.getText().length()!=0) {
+                    if(!Utils.isActualNumber(birthHeightTxt.getText())) {
+                        Utils.showMessage("Please input number correctly");
+                        birthHeightTxt.requestFocus();
+                        return;
+                    }
+                    else {
+                        birthHeight = Float.parseFloat(birthHeightTxt.getText());
+                    }
+                }
+                else {
+                    birthHeight = -1;
                 }
 
                 // Check Date of Birth
@@ -334,6 +352,7 @@ public class RequestPage extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                     birthWeightTxt.setText("");
+                    birthHeightTxt.setText("");
                     birthDateTxt.setText("");
                     ageTxt.setText("");
                     heightTxt.setText("");
@@ -370,9 +389,10 @@ public class RequestPage extends JFrame{
             public void mouseClicked(MouseEvent e) {
                 super.mouseClicked(e);
 
+                // copy the information to the clipboard (for pasting into the doctor's chart)
                 if(e.getClickCount() == 2) {
-                    String myString = "Jieun Choi";
-                    StringSelection stringSelection = new StringSelection(myString);
+                    String strInfo = rv.getInformationNotes();
+                    StringSelection stringSelection = new StringSelection(strInfo);
                     Clipboard clpbrd = Toolkit.getDefaultToolkit().getSystemClipboard();
                     clpbrd.setContents(stringSelection, null);
                 }
@@ -383,6 +403,21 @@ public class RequestPage extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 showChangeDateDialog();
+            }
+        });
+        birthHeightTxt.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+                super.keyTyped(e);
+                if(birthHeightTxt.getText().length()>=Params.MAX_INPUT_LENGTH) {
+                    e.consume();
+                    return;
+                }
+
+                if(!Utils.isDecimalInput(e.getKeyChar())) {
+                    getToolkit().beep();
+                    e.consume();
+                }
             }
         });
     }
@@ -528,6 +563,22 @@ public class RequestPage extends JFrame{
             }
             rv.setBirthWeight(birthWeight, p);
         }
+
+        if(birthHeight>0) {
+            if(gender==Params.Gender.MALE) dataType = Params.DataType.HEIGHT_MALE;
+            else dataType = Params.DataType.HEIGHT_FEMALE;
+            gi = dm.getGrowthInfo(dataType, 0, isCalculatedByDay);
+            if(gi!=null) {
+                p = Utils.getNormalDistribute(gi, birthHeight);
+            }
+            else {
+                p = -1;
+            }
+            rv.setBirthHeight(birthHeight, p);
+        }
+
+        // Getting Height data
+        if(gender==Params.Gender.MALE) dataType = Params.DataType.HEIGHT_MALE;
 
         // Getting Height data
         if(gender==Params.Gender.MALE) dataType = Params.DataType.HEIGHT_MALE;
