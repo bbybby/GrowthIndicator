@@ -275,22 +275,6 @@
                   </component>
                 </children>
               </grid>
-              <component id="6a8a3" class="javax.swing.JButton" binding="viewBtn">
-                <constraints>
-                  <grid row="6" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-                  <gridbag weightx="1.0" weighty="0.0"/>
-                </constraints>
-                <properties>
-                  <margin top="3" left="18" bottom="3" right="18"/>
-                  <text value="&amp;퍼센타일 보기"/>
-                </properties>
-              </component>
-              <vspacer id="baada">
-                <constraints>
-                  <grid row="7" column="2" row-span="1" col-span="3" vsize-policy="6" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
-                  <gridbag weightx="0.0" weighty="0.0"/>
-                </constraints>
-              </vspacer>
               <hspacer id="15be5">
                 <constraints>
                   <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
@@ -364,27 +348,6 @@
                   <horizontalAlignment value="0"/>
                   <horizontalTextPosition value="0"/>
                   <text value=""/>
-                </properties>
-              </component>
-              <component id="21c6" class="javax.swing.JButton" binding="resetBtn">
-                <constraints>
-                  <grid row="6" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                  <gridbag weightx="0.0" weighty="0.0"/>
-                </constraints>
-                <properties>
-                  <margin top="3" left="18" bottom="3" right="18"/>
-                  <text value="초기화"/>
-                </properties>
-              </component>
-              <component id="68a6" class="javax.swing.JButton" binding="exitBtn">
-                <constraints>
-                  <grid row="6" column="6" row-span="1" col-span="3" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-                  <gridbag weightx="0.0" weighty="0.0"/>
-                </constraints>
-                <properties>
-                  <margin top="3" left="18" bottom="3" right="18"/>
-                  <preferredSize width="120" height="39"/>
-                  <text value="프로그램 종료"/>
                 </properties>
               </component>
               <component id="abc59" class="javax.swing.JCheckBox" binding="calculateByDayCkBox">
@@ -468,6 +431,51 @@
                   </component>
                 </children>
               </grid>
+              <grid id="c9601" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
+                <constraints>
+                  <grid row="6" column="2" row-span="1" col-span="7" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                  <gridbag weightx="0.0" weighty="0.0"/>
+                </constraints>
+                <properties>
+                  <minimumSize width="400" height="49"/>
+                  <preferredSize width="400" height="49"/>
+                </properties>
+                <border type="none"/>
+                <children>
+                  <component id="6a8a3" class="javax.swing.JButton" binding="viewBtn">
+                    <constraints/>
+                    <properties>
+                      <horizontalAlignment value="2"/>
+                      <margin top="3" left="18" bottom="3" right="18"/>
+                      <text value="&amp;퍼센타일 보기"/>
+                    </properties>
+                  </component>
+                  <component id="21c6" class="javax.swing.JButton" binding="resetBtn">
+                    <constraints/>
+                    <properties>
+                      <horizontalAlignment value="2"/>
+                      <margin top="3" left="18" bottom="3" right="18"/>
+                      <text value="초기화"/>
+                    </properties>
+                  </component>
+                  <component id="a708e" class="javax.swing.JButton" binding="exitBtn">
+                    <constraints/>
+                    <properties>
+                      <actionCommand value="프로그램종료"/>
+                      <horizontalAlignment value="2"/>
+                      <label value="프로그램 종료"/>
+                      <margin top="3" left="18" bottom="3" right="18"/>
+                      <text value="프로그램 종료"/>
+                    </properties>
+                  </component>
+                </children>
+              </grid>
+              <hspacer id="baa98">
+                <constraints>
+                  <grid row="7" column="7" row-span="1" col-span="1" vsize-policy="1" hsize-policy="6" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+                  <gridbag weightx="0.0" weighty="0.0"/>
+                </constraints>
+              </hspacer>
             </children>
           </grid>
           <component id="dc734" class="javax.swing.JLabel">
