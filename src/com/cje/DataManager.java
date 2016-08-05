@@ -24,7 +24,7 @@ public class DataManager {
         giMap = new HashMap<>();
 
         File f = new File(DataManager.class.getProtectionDomain().getCodeSource().getLocation().getPath());
-        FILE_PATH = f.getAbsolutePath() + "\\";
+        FILE_PATH = f.getAbsolutePath() + File.separator;
         if(f.isFile()) {
             isRunWithJarFile = true;
         }
