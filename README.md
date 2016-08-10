@@ -29,12 +29,15 @@ age by months, L value, M value, S value, 3rd, 5th, 10th, 25th, 50th, 75th, 90th
 
 ## How to Compile
 - Using IntelliJ
- 1. This program needs Apache Commons Math Library, so import  'commons-math3-3.6.1.jar' into the project. (You can download at http://commons.apache.org/proper/commons-math/download_math.cgi )
- 2. Import GrowthIndicator module
+ 1. Import GrowthIndicator module
   (File -> Project Structure -> (left pane) Modules -> '+' -> import Module)
- 3. Set 'data' directory as a resource directory
+ 2. Set 'data' directory as a resource directory
   (File -> Project Structure -> (left pane) Modules -> choose 'data' directory -> set as resource directory)
-4. Set 'src/res' directory as a resource directory
-  ( same way like #3 )
+ 3. Like #3, set 'res', 'lib' as resource directories
 
 ## How to Run
+ - 'Run' with IntelliJ
+ - Command Line (in the project directory)
+   - java -cp .;commons-math3-3.6.1.jar com.cje.Main
+
+

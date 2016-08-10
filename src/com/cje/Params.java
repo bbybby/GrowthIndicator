@@ -8,6 +8,7 @@ import java.io.File;
  * class for static parameters
  */
 public class Params {
+    public static final String VERSION = "0.9 Beta";
     public static final int MAX_INPUT_LENGTH = 6;
 
     public static final String FIELD_DIVIDER = ",";
