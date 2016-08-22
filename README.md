@@ -38,7 +38,7 @@ age by months, L value, M value, S value, 3rd, 5th, 10th, 25th, 50th, 75th, 90th
 ## How to Run
  - Using IntelliJ
    - 'Run'
- - Command Line (in the project directory)
+ - Using Command Line (in the project directory)
    - java -cp .;commons-math3-3.6.1.jar com.cje.Main
 
 
