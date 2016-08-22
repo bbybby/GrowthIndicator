@@ -33,10 +33,11 @@ age by months, L value, M value, S value, 3rd, 5th, 10th, 25th, 50th, 75th, 90th
   (File -> Project Structure -> (left pane) Modules -> '+' -> import Module)
  2. Set 'data' directory as a resource directory
   (File -> Project Structure -> (left pane) Modules -> choose 'data' directory -> set as resource directory)
- 3. Like #3, set 'res', 'lib' as resource directories
+ 3. Set 'res', 'lib' as resource directories
 
 ## How to Run
- - 'Run' with IntelliJ
+ - Using IntelliJ
+   - 'Run'
  - Command Line (in the project directory)
    - java -cp .;commons-math3-3.6.1.jar com.cje.Main
 
