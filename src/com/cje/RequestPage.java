@@ -217,7 +217,6 @@ public class RequestPage extends JFrame{
                 int y, m, d;
 
                 String[] str = birthDateTxt.getText().replaceAll("_", "").split("/");
-                Utils.log("birthDateTxt:" + birthDateTxt.getText());
                 try {
                     y = Integer.parseInt(str[0]);
                     m = Integer.parseInt(str[1]);

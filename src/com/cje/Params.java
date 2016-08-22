@@ -4,11 +4,12 @@ import java.io.File;
 
 /**
  * Created by Jieun Choi on 6/13/2016.
+ * Last Updated on 8/22/2016
  *
  * class for static parameters
  */
 public class Params {
-    public static final String VERSION = "0.9 Beta";
+    public static final String VERSION = "0.9.9 Beta";
     public static final int MAX_INPUT_LENGTH = 6;
 
     public static final String FIELD_DIVIDER = ",";
