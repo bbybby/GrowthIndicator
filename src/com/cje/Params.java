@@ -13,6 +13,9 @@ public class Params {
 
     public static final String FIELD_DIVIDER = ",";
     public static final int FIELD_CNT = 13;
+
+    public static final int INIT_VAL = -1;
+    public static final int ERROR_CODE = -100;
     public enum Gender { MALE, FEMALE, NONE };
     public enum DataType {
         HEIGHT_MALE("GI_height_male.csv"), HEIGHT_FEMALE("GI_height_female.csv"),

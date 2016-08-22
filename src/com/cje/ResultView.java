@@ -38,17 +38,17 @@ public class ResultView {
     public ResultView() { initParam(); }
 
     private void initParam() {
-        birthWeight = -1;
+        birthWeight = Params.INIT_VAL;
         birthWeightPercentile = "";
-        birthHeight = -1;
+        birthHeight = Params.INIT_VAL;
         birthHeightPercentile = "";
-        height = -1;
+        height = Params.INIT_VAL;
         heightPercentile = "";
-        weight = -1;
+        weight = Params.INIT_VAL;
         weightPercentile = "";
-        head = -1;
+        head = Params.INIT_VAL;
         headPercentile = "";
-        bmi = -1;
+        bmi = Params.INIT_VAL;
         bmiPercentile = "";
 
         gi_height = null;
@@ -59,7 +59,7 @@ public class ResultView {
 
     public void setBirthWeight(float bw, float p) {
         birthWeight = bw;
-        if(p == -1) {
+        if(p == Params.INIT_VAL) {
             if(birthWeight>0) birthWeightPercentile = NO_DATA_MSG;
             else birthWeightPercentile = "";
         }
@@ -68,7 +68,7 @@ public class ResultView {
 
     public void setBirthHeight(float bh, float p) {
         birthHeight = bh;
-        if(p == -1) {
+        if(p == Params.INIT_VAL) {
             if(birthHeight>0) birthHeightPercentile = NO_DATA_MSG;
             else birthHeightPercentile = "";
         }
@@ -78,7 +78,7 @@ public class ResultView {
     public void setHeight(GrowthInfo gi, float h, float p) {
         gi_height = gi;
         height = h;
-        if(p == -1) {
+        if(p == Params.INIT_VAL) {
             if(height>0) heightPercentile = NO_DATA_MSG;
             else heightPercentile = "";
         }
@@ -88,7 +88,7 @@ public class ResultView {
     public void setWeight(GrowthInfo gi, float w, float p) {
         gi_weight = gi;
         weight = w;
-        if(p == -1) {
+        if(p == Params.INIT_VAL) {
             if(weight>0) weightPercentile = NO_DATA_MSG;
             else weightPercentile = "";
         }
@@ -98,7 +98,7 @@ public class ResultView {
     public void setHead(GrowthInfo gi, float hd, float p) {
         gi_head = gi;
         head = hd;
-        if(p == -1) {
+        if(p == Params.INIT_VAL) {
             if(head>0) headPercentile = NO_DATA_MSG;
             else headPercentile = "";
         }
@@ -108,7 +108,7 @@ public class ResultView {
     public void setBmi(GrowthInfo gi, float b, float p) {
         gi_bmi = gi;
         bmi = b;
-        if(p == -1) {
+        if(p == Params.INIT_VAL) {
             if(bmi>0) bmiPercentile =  "해당 년령<br>데이터 없음";
             else bmiPercentile = "";
         }

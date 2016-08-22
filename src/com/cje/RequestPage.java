@@ -67,22 +67,31 @@ public class RequestPage extends JFrame{
 
     // Initialize member variables
     private void initParam() {
-        birthYear = -1;
-        birthMonth = -1;
-        birthDay = -1;
-        ageByDay = -1;
+        birthYear = Params.INIT_VAL;
+        birthMonth = Params.INIT_VAL;
+        birthDay = Params.INIT_VAL;
+        ageByDay = Params.INIT_VAL;
 
-        birthWeight = -1;
-        birthHeight = -1;
-        height = -1;
-        weight = -1;
-        head = -1;
-        bmi = -1;
+        birthWeight = Params.INIT_VAL;
+        birthHeight = Params.INIT_VAL;
+        height = Params.INIT_VAL;
+        weight = Params.INIT_VAL;
+        head = Params.INIT_VAL;
+        bmi = Params.INIT_VAL;
 
         setBaseDate(LocalDate.now());
     }
 
-    private void init() {
+    public RequestPage() {
+        super("Growth Indicator");
+        setContentPane(mainPanel);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        pack();
+        setLocationRelativeTo(null);
+    }
+
+    // initialize variables and the objects
+    public void initialize() {
         initParam();
 
         dm = new DataManager();
@@ -99,175 +108,132 @@ public class RequestPage extends JFrame{
         }
     }
 
-    public RequestPage() {
-        super("Growth Indicator");
+    // Returns valid input otherwise returns ERROR CODE
+    private float getValidInput(JTextField txtField) {
+        if (txtField.getText().length() != 0) {
+            if (!Utils.isActualNumber(txtField.getText())) {
+                Utils.showMessage("Please input valid number");
+                txtField.requestFocus();
+                return Params.ERROR_CODE;
+            } else {
+                return Float.parseFloat(txtField.getText());
+            }
+        } else {    // NO INPUT
+           return Params.INIT_VAL;
+        }
+    }
 
-
-        setContentPane(mainPanel);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        pack();
-        setLocationRelativeTo(null);
-
-        // initialize variables and the objects
-        init();
+    public void addListeners() {
 
         viewBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(!isDataLoaded) {
+                if (!isDataLoaded) {
                     Utils.showMessage("파일이 정상적으로 로딩되지 않았습니다.");
                     return;
                 }
 
                 // Check Gender
-                if(maleRdBtn.isSelected()) gender = Params.Gender.MALE;
-                else if(femaleRdBtn.isSelected()) gender = Params.Gender.FEMALE;
+                if (maleRdBtn.isSelected()) gender = Params.Gender.MALE;
+                else if (femaleRdBtn.isSelected()) gender = Params.Gender.FEMALE;
                 else {
                     Utils.showMessage("Please select gender.");
                     return;
                 }
 
-                // Check Weight at Birth
-                if(birthWeightTxt.getText().length()!=0) {
-                    if(!Utils.isActualNumber(birthWeightTxt.getText())) {
-                        Utils.showMessage("Please input number correctly");
-                        birthWeightTxt.requestFocus();
-                        return;
-                    }
-                    else {
-                        birthWeight = Float.parseFloat(birthWeightTxt.getText());
-                    }
-                }
-                else {
-                    birthWeight = -1;
-                }
+                float val;
+                // Get Weight at Birth
+                val = getValidInput(birthWeightTxt);
+                if(val == Params.ERROR_CODE) return;
+                else birthWeight = val;
 
-                // Check Height at Birth
-                if(birthHeightTxt.getText().length()!=0) {
-                    if(!Utils.isActualNumber(birthHeightTxt.getText())) {
-                        Utils.showMessage("Please input number correctly");
-                        birthHeightTxt.requestFocus();
-                        return;
-                    }
-                    else {
-                        birthHeight = Float.parseFloat(birthHeightTxt.getText());
-                    }
-                }
-                else {
-                    birthHeight = -1;
-                }
+                // Get Height at Birth
+                val = getValidInput(birthHeightTxt);
+                if(val == Params.ERROR_CODE) return;
+                else birthHeight = val;
+
+                // Get Height value
+                val = getValidInput(heightTxt);
+                if(val == Params.ERROR_CODE) return;
+                else height = val;
+
+                // Get Weight value
+                val = getValidInput(weightTxt);
+                if(val == Params.ERROR_CODE) return;
+                else weight = val;
+
+                // Get Head value
+                val = getValidInput(headTxt);
+                if(val == Params.ERROR_CODE) return;
+                else head = val;
+
+                // Get BMI value
+                val = getValidInput(bmiTxt);
+                if(val == Params.ERROR_CODE) return;
+                else bmi = val;
 
                 // Check Date of Birth
-                if(ageByDay<0) {
+                if (ageByDay < 0) {
                     Utils.showMessage("Please input date of birth correctly.");
                     birthDateTxt.requestFocus();
                     return;
-                }
-
-                // Check Height value
-                if(heightTxt.getText().length()>0) {
-                   if(!Utils.isActualNumber(heightTxt.getText())) {
-                       Utils.showMessage("Please input number correctly");
-                       heightTxt.requestFocus();
-                       return;
-                   }
-                   else {
-                       height = Float.parseFloat(heightTxt.getText());
-                   }
-                }
-                else {
-                   height = -1;
-                }
-
-                // Check Weight value
-                if(weightTxt.getText().length()>0) {
-                    if(!Utils.isActualNumber(weightTxt.getText())) {
-                        Utils.showMessage("Please input number correctly");
-                        weightTxt.requestFocus();
-                        return;
-                    }
-                    else {
-                        weight = Float.parseFloat(weightTxt.getText());
-                    }
-                }
-                else {
-                    weight = -1;
-                }
-
-                // Check the girth of Head value
-                if(headTxt.getText().length()>0) {
-                    if(!Utils.isActualNumber(headTxt.getText())) {
-                        Utils.showMessage("Please input number correctly");
-                        headTxt.requestFocus();
-                        return;
-                    }
-                    else {
-                        head = Float.parseFloat(headTxt.getText());
-                    }
-                }
-                else {
-                    head = -1;
-                }
-
-                // Check BMI value
-                if(bmiTxt.getText().length()>0) {
-                    if(!Utils.isActualNumber(bmiTxt.getText())) {
-                        Utils.showMessage("Please input number correctly");
-                        bmiTxt.requestFocus();
-                        return;
-                    }
-                    else {
-                        bmi = Float.parseFloat(bmiTxt.getText());
-                    }
-                }
-                else {
-                    bmi = -1;
                 }
 
                 showResults();
             }
         });
 
-        birthWeightTxt.addKeyListener(new KeyAdapter() {
+        class LocalKeyAdapter extends KeyAdapter {
+            JTextField txtField;
+
+            public LocalKeyAdapter(JTextField txtField) {
+                this.txtField = txtField;
+            }
+
             @Override
             public void keyTyped(KeyEvent e) {
                 super.keyTyped(e);
-                if(birthWeightTxt.getText().length()>=Params.MAX_INPUT_LENGTH) {
+                if (txtField.getText().length() >= Params.MAX_INPUT_LENGTH) {
                     e.consume();
                     return;
                 }
 
-                if(!Utils.isDecimalInput(e.getKeyChar())) {
+                if (!Utils.isDecimalInput(e.getKeyChar())) {
                     getToolkit().beep();
-                   e.consume();
+                    e.consume();
                 }
             }
-        });
+        }
+
+        birthWeightTxt.addKeyListener(new LocalKeyAdapter(birthWeightTxt));
+        heightTxt.addKeyListener(new LocalKeyAdapter(heightTxt));
+        weightTxt.addKeyListener(new LocalKeyAdapter(weightTxt));
+        headTxt.addKeyListener(new LocalKeyAdapter(headTxt));
+        bmiTxt.addKeyListener(new LocalKeyAdapter(bmiTxt));
+
         birthDateTxt.addFocusListener(new FocusAdapter() {
             @Override
             public void focusLost(FocusEvent e) {
                 super.focusLost(e);
-                int y = -1;
-                int m = -1;
-                int d = -1;
+                int y, m, d;
 
-                String[] str = birthDateTxt.getText().replaceAll("_","").split("/");
-                Utils.log("birthDateTxt:"+birthDateTxt.getText());
+                String[] str = birthDateTxt.getText().replaceAll("_", "").split("/");
+                Utils.log("birthDateTxt:" + birthDateTxt.getText());
                 try {
                     y = Integer.parseInt(str[0]);
                     m = Integer.parseInt(str[1]);
                     d = Integer.parseInt(str[2]);
-                } catch(Exception ex) {
+                } catch (Exception ex) {
                     birthDateTxt.setText("");
                     birthDateTxt.requestFocus();
                     return;
                 }
 
-                if(Utils.isValidDate(y, m, d)) {
+                if (Utils.isValidDate(y, m, d)) {
                     LocalDate birthday = LocalDate.of(y, m, d);
                     int gap = (int) ChronoUnit.DAYS.between(birthday, baseDate);
 
-                    if(gap<0) {
+                    if (gap < 0) {
                         Utils.showMessage("The Date should be earlier than the Base Date");
                         birthDateTxt.requestFocus();
                         return;
@@ -279,71 +245,10 @@ public class RequestPage extends JFrame{
                     birthDay = d;
                     ageByDay = gap;
                     ageTxt.setText(Utils.getAgeLabel(birthday, baseDate, ageByDay));
-                }
-                else {
+                } else {
                     Utils.showMessage("Please check the date");
                     birthDateTxt.requestFocus();
                     return;
-                }
-            }
-        });
-        heightTxt.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyTyped(KeyEvent e) {
-                super.keyTyped(e);
-                if(heightTxt.getText().length()>=Params.MAX_INPUT_LENGTH) {
-                    e.consume();
-                    return;
-                }
-
-                if(!Utils.isDecimalInput(e.getKeyChar())) {
-                    getToolkit().beep();
-                    e.consume();
-                }
-            }
-        });
-        weightTxt.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyTyped(KeyEvent e) {
-                super.keyTyped(e);
-                if(weightTxt.getText().length()>=Params.MAX_INPUT_LENGTH) {
-                    e.consume();
-                    return;
-                }
-
-                if(!Utils.isDecimalInput(e.getKeyChar())) {
-                    getToolkit().beep();
-                    e.consume();
-                }
-            }
-        });
-        headTxt.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyTyped(KeyEvent e) {
-                super.keyTyped(e);
-                if(headTxt.getText().length()>=Params.MAX_INPUT_LENGTH) {
-                    e.consume();
-                    return;
-                }
-
-                if(!Utils.isDecimalInput(e.getKeyChar())) {
-                    getToolkit().beep();
-                    e.consume();
-                }
-            }
-        });
-        bmiTxt.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyTyped(KeyEvent e) {
-                super.keyTyped(e);
-                if(bmiTxt.getText().length()>=Params.MAX_INPUT_LENGTH) {
-                    e.consume();
-                    return;
-                }
-
-                if(!Utils.isDecimalInput(e.getKeyChar())) {
-                    getToolkit().beep();
-                    e.consume();
                 }
             }
         });
@@ -364,6 +269,7 @@ public class RequestPage extends JFrame{
                     cleanView();
             }
         });
+
         exitBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -372,6 +278,7 @@ public class RequestPage extends JFrame{
                 }
             }
         });
+
         calculateByDayCkBox.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
@@ -384,6 +291,7 @@ public class RequestPage extends JFrame{
 
             }
         });
+
         resultTxt.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -405,6 +313,7 @@ public class RequestPage extends JFrame{
                 showChangeDateDialog();
             }
         });
+
         birthHeightTxt.addKeyListener(new KeyAdapter() {
             @Override
             public void keyTyped(KeyEvent e) {
@@ -425,7 +334,7 @@ public class RequestPage extends JFrame{
     private void setBaseDate(LocalDate newDate) {
         baseDate = newDate;
         baseDateTxt.setText("[기준일] "+baseDate.getYear()+"년 "+baseDate.getMonthValue()+"월 "+baseDate.getDayOfMonth()+"일");
-        if(ageByDay != -1) {    // System already has the Birth date and Age, so we need to update
+        if(ageByDay != Params.INIT_VAL) {    // System already has the Birth date and Age, so we need to update
             LocalDate birthday = LocalDate.of(birthYear, birthMonth, birthDay);
             ageByDay = (int) ChronoUnit.DAYS.between(birthday, baseDate);
 
@@ -497,7 +406,7 @@ public class RequestPage extends JFrame{
                             return;
                         }
                         if(Utils.isValidDate(y, m, d)) {
-                            if(ageByDay != -1) {    // If the system has Birth Date and Age
+                            if(ageByDay != Params.INIT_VAL) {    // If the system has Birth Date and Age
                                 int gap = (int) ChronoUnit.DAYS.between(LocalDate.of(birthYear, birthMonth, birthDay),
                                         LocalDate.of(y,m,d));
 
@@ -521,8 +430,6 @@ public class RequestPage extends JFrame{
                     else {
                         dialog.dispose();
                     }
-
-                    //dialog.setVisible(false);
                 }
             }
         });
@@ -551,7 +458,7 @@ public class RequestPage extends JFrame{
         GrowthInfo gi;
         float p;
 
-        if(birthWeight>0) {
+        if(birthWeight != Params.INIT_VAL) {
             if(gender==Params.Gender.MALE) dataType = Params.DataType.WEIGHT_MALE;
             else dataType = Params.DataType.WEIGHT_FEMALE;
             gi = dm.getGrowthInfo(dataType, 0, isCalculatedByDay);
@@ -559,12 +466,12 @@ public class RequestPage extends JFrame{
                 p = Utils.getNormalDistribute(gi, birthWeight);
             }
             else {
-                p = -1;
+                p = Params.INIT_VAL;
             }
             rv.setBirthWeight(birthWeight, p);
         }
 
-        if(birthHeight>0) {
+        if(birthHeight != Params.INIT_VAL) {
             if(gender==Params.Gender.MALE) dataType = Params.DataType.HEIGHT_MALE;
             else dataType = Params.DataType.HEIGHT_FEMALE;
             gi = dm.getGrowthInfo(dataType, 0, isCalculatedByDay);
@@ -572,7 +479,7 @@ public class RequestPage extends JFrame{
                 p = Utils.getNormalDistribute(gi, birthHeight);
             }
             else {
-                p = -1;
+                p = Params.INIT_VAL;
             }
             rv.setBirthHeight(birthHeight, p);
         }
@@ -584,11 +491,11 @@ public class RequestPage extends JFrame{
         if(gender==Params.Gender.MALE) dataType = Params.DataType.HEIGHT_MALE;
         else dataType = Params.DataType.HEIGHT_FEMALE;
         gi = dm.getGrowthInfo(dataType, ageByDay, isCalculatedByDay);
-        if((gi!=null) && (height>0)) {
+        if((gi!=null) && (height != Params.INIT_VAL)) {
             p = Utils.getNormalDistribute(gi, height);
         }
         else {
-           p = -1;
+           p = Params.INIT_VAL;
         }
         rv.setHeight(gi, height, p);
 
@@ -596,11 +503,11 @@ public class RequestPage extends JFrame{
         if(gender==Params.Gender.MALE) dataType = Params.DataType.WEIGHT_MALE;
         else dataType = Params.DataType.WEIGHT_FEMALE;
         gi = dm.getGrowthInfo(dataType, ageByDay, isCalculatedByDay);
-        if((gi!=null) && (weight>0)) {
+        if((gi!=null) && (weight != Params.INIT_VAL)) {
             p = Utils.getNormalDistribute(gi, weight);
         }
         else {
-            p = -1;
+            p = Params.INIT_VAL;
         }
         rv.setWeight(gi, weight, p);
 
@@ -608,11 +515,11 @@ public class RequestPage extends JFrame{
         if(gender==Params.Gender.MALE) dataType = Params.DataType.HEAD_MALE;
         else dataType = Params.DataType.HEAD_FEMALE;
         gi = dm.getGrowthInfo(dataType, ageByDay, isCalculatedByDay);
-        if((gi!=null) && (head>0)) {
+        if((gi!=null) && (head != Params.INIT_VAL)) {
             p = Utils.getNormalDistribute(gi, head);
         }
         else {
-            p = -1;
+            p = Params.INIT_VAL;
         }
         rv.setHead(gi, head, p);
 
@@ -620,11 +527,11 @@ public class RequestPage extends JFrame{
         if(gender==Params.Gender.MALE) dataType = Params.DataType.BMI_MALE;
         else dataType = Params.DataType.BMI_FEMALE;
         gi = dm.getGrowthInfo(dataType, ageByDay, isCalculatedByDay);
-        if((gi!=null) && (bmi>0)) {
+        if((gi!=null) && (bmi != Params.INIT_VAL)) {
             p = Utils.getNormalDistribute(gi, bmi);
         }
         else {
-            p = -1;
+            p = Params.INIT_VAL;
         }
         rv.setBmi(gi, bmi, p);
 
