@@ -124,7 +124,6 @@ public class RequestPage extends JFrame{
     }
 
     public void addListeners() {
-
         viewBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -273,7 +272,7 @@ public class RequestPage extends JFrame{
         exitBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(null, "프로그램을 끝내시겠습니까?","Select an Option", JOptionPane.YES_NO_OPTION)) {
+                if(JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(null, "프로그램을 끝내시겠습니까?", "Select an Option", JOptionPane.YES_NO_OPTION)) {
                     System.exit(0);
                 }
             }
@@ -333,7 +332,8 @@ public class RequestPage extends JFrame{
 
     private void setBaseDate(LocalDate newDate) {
         baseDate = newDate;
-        baseDateTxt.setText("[기준일] "+baseDate.getYear()+"년 "+baseDate.getMonthValue()+"월 "+baseDate.getDayOfMonth()+"일");
+        baseDateTxt.setText("[기준일] " + baseDate.getYear() + "년 "
+                + baseDate.getMonthValue() + "월 " + baseDate.getDayOfMonth() + "일");
         if(ageByDay != Params.INIT_VAL) {    // System already has the Birth date and Age, so we need to update
             LocalDate birthday = LocalDate.of(birthYear, birthMonth, birthDay);
             ageByDay = (int) ChronoUnit.DAYS.between(birthday, baseDate);
@@ -483,9 +483,6 @@ public class RequestPage extends JFrame{
             }
             rv.setBirthHeight(birthHeight, p);
         }
-
-        // Getting Height data
-        if(gender==Params.Gender.MALE) dataType = Params.DataType.HEIGHT_MALE;
 
         // Getting Height data
         if(gender==Params.Gender.MALE) dataType = Params.DataType.HEIGHT_MALE;
