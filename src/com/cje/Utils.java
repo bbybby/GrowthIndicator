@@ -66,7 +66,7 @@ public class Utils {
 
         if(years>0) label += years + "년 ";
         if(months>0) label += months + "개월 ";
-        label += days + "일     [ " + total_months + "개월 ("+ ageByDay + "일) ]";
+        label += days + "일   [ " + total_months + "개월 ("+ ageByDay + "일) ]";
 
         return label;
     }

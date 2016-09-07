@@ -118,16 +118,16 @@ public class ResultView {
     private String getMeasuredDataTable() {
         String strView = "<table> <tr>"
                 + "<th></th> <th>출생체중(kg)</th> <th>출생신장(cm)</th>"
-                + "<th>신장 (cm)</th> <th>체중 (kg)</th> <th>두위 (cm)</th> <th>BMI</th>"
+                + "<th>체중 (kg)</th> <th>신장 (cm)</th> <th>두위 (cm)</th> <th>BMI</th>"
                 + "</tr>";
         strView += "<tr><th>측정치</th><td>";
         if(birthWeight>0) strView += birthWeight;
         strView += "</td><td>";
         if(birthHeight>0) strView += birthHeight;
         strView += "</td><td>";
-        if(height>0) strView += height;
-        strView += "</td><td>";
         if(weight>0) strView += weight;
+        strView += "</td><td>";
+        if(height>0) strView += height;
         strView += "</td><td>";
         if(head>0) strView += head;
         strView += "</td><td>";
@@ -136,8 +136,8 @@ public class ResultView {
                 + "<tr><th>퍼센타일</th>"
                 + "<td>" + birthWeightPercentile + "</td>"
                 + "<td>" + birthHeightPercentile + "</td>"
-                + "<td>" + heightPercentile + "</td>"
                 + "<td>" + weightPercentile + "</td>"
+                + "<td>" + heightPercentile + "</td>"
                 + "<td>" + headPercentile + "</td>"
                 + "<td>" + bmiPercentile + "</td></tr>"
                 + "</table>";
@@ -170,8 +170,8 @@ public class ResultView {
         String strView = "<table><tr>"
                 + "<th></th><th>3p</th><th>5p</th><th>10p</th><th>25p</th>"
                 + "<th>50p</th><th>75p</th><th>90p</th><th>95p</th><th>97p</th></tr>";
-        strView += "<tr><th>신장</th>" + getPercentileRow(gi_height) + "</tr>";
         strView += "<tr><th>체중</th>" + getPercentileRow(gi_weight) + "</tr>";
+        strView += "<tr><th>신장</th>" + getPercentileRow(gi_height) + "</tr>";
         strView += "<tr><th>두위</th>" + getPercentileRow(gi_head) + "</tr>";
         strView += "<tr><th>BMI</th>" + getPercentileRow(gi_bmi) + "</tr>";
         strView += "</table>";
@@ -200,10 +200,13 @@ public class ResultView {
         String str = "";
         if(birthWeight>0) str += "출생체중:"+birthWeight+"kg ("+birthWeightPercentile+")\n";
         if(birthHeight>0) str += "출생신장:"+birthHeight+"cm ("+birthHeightPercentile+")\n";
-        if(height>0) str+= "신장:"+height+"cm ("+heightPercentile+")\n";
         if(weight>0) str+= "체중:"+weight+"kg ("+weightPercentile+")\n";
+        if(height>0) str+= "신장:"+height+"cm ("+heightPercentile+")\n";
         if(head>0) str += "두위:"+head+"cm ("+headPercentile+")\n";
-        if(bmi>0) str += "BMI:"+bmi+" ("+bmiPercentile+")\n";
+        if(bmi>0) {
+            bmiPercentile = bmiPercentile.replace("<br>", " ");
+            str += "BMI:"+bmi+" ("+bmiPercentile+")\n";
+        }
 
         return str;
     }

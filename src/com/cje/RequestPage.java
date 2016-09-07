@@ -1,6 +1,5 @@
 package com.cje;
 
-import javax.rmi.CORBA.Util;
 import javax.swing.*;
 import javax.swing.text.MaskFormatter;
 import java.awt.*;
@@ -20,15 +19,14 @@ import java.util.logging.Level;
  * class for User interface
  */
 public class RequestPage extends JFrame{
-    private JTextField titleTextField;
+//    private JTextField titleTextField;
 
     private JPanel mainPanel;
     private JPanel inputPanel;
     private JRadioButton maleRdBtn;
     private JRadioButton femaleRdBtn;
-    private JComboBox birthYearCBox;
-    private JFormattedTextField heightTxt;
     private JFormattedTextField weightTxt;
+    private JFormattedTextField heightTxt;
     private JFormattedTextField headTxt;
     private JFormattedTextField bmiTxt;
     private JButton viewBtn;
@@ -43,7 +41,6 @@ public class RequestPage extends JFrame{
     private JLabel resultTxt;
     private JCheckBox calculateByDayCkBox;
     private JButton changeDateBtn;
-    private JLabel ageLabel;
 
     private DataManager dm;
     private ResultView rv;
@@ -152,14 +149,14 @@ public class RequestPage extends JFrame{
                 else birthHeight = val;
 
                 // Get Height value
-                val = getValidInput(heightTxt);
-                if(val == Params.ERROR_CODE) return;
-                else height = val;
-
-                // Get Weight value
                 val = getValidInput(weightTxt);
                 if(val == Params.ERROR_CODE) return;
                 else weight = val;
+
+                // Get Weight value
+                val = getValidInput(heightTxt);
+                if(val == Params.ERROR_CODE) return;
+                else height = val;
 
                 // Get Head value
                 val = getValidInput(headTxt);
@@ -205,8 +202,8 @@ public class RequestPage extends JFrame{
         }
 
         birthWeightTxt.addKeyListener(new LocalKeyAdapter(birthWeightTxt));
-        heightTxt.addKeyListener(new LocalKeyAdapter(heightTxt));
         weightTxt.addKeyListener(new LocalKeyAdapter(weightTxt));
+        heightTxt.addKeyListener(new LocalKeyAdapter(heightTxt));
         headTxt.addKeyListener(new LocalKeyAdapter(headTxt));
         bmiTxt.addKeyListener(new LocalKeyAdapter(bmiTxt));
 
@@ -258,8 +255,8 @@ public class RequestPage extends JFrame{
                     birthHeightTxt.setText("");
                     birthDateTxt.setText("");
                     ageTxt.setText("");
-                    heightTxt.setText("");
                     weightTxt.setText("");
+                    heightTxt.setText("");
                     headTxt.setText("");
                     bmiTxt.setText("");
 
@@ -297,7 +294,9 @@ public class RequestPage extends JFrame{
 
                 // copy the information to the clipboard (for pasting into the doctor's chart)
                 if(e.getClickCount() == 2) {
-                    String strInfo = rv.getInformationNotes();
+                    String strInfo = baseDateTxt.getText() + "\n";
+                    strInfo += "나이 : " + ageTxt.getText() + "\n";
+                    strInfo += rv.getInformationNotes();
                     StringSelection stringSelection = new StringSelection(strInfo);
                     Clipboard clpbrd = Toolkit.getDefaultToolkit().getSystemClipboard();
                     clpbrd.setContents(stringSelection, null);
