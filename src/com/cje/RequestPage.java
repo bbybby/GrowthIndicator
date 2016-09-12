@@ -168,6 +168,14 @@ public class RequestPage extends JFrame{
                 if(val == Params.ERROR_CODE) return;
                 else bmi = val;
 
+                // Fill up the BMI value with weight & height if it has no input
+                if(bmi == Params.INIT_VAL) {
+                    if((weight!=Params.INIT_VAL) && (height!=Params.INIT_VAL)) {
+                        bmi = Math.round(weight/(float)Math.pow(height/100, 2)*100f)/100f;
+                        bmiTxt.setText(Float.toString(bmi));
+                    }
+                }
+
                 // Check Date of Birth
                 if (ageByDay < 0) {
                     Utils.showMessage("Please input date of birth correctly.");
@@ -244,6 +252,19 @@ public class RequestPage extends JFrame{
                     Utils.showMessage("Please check the date");
                     birthDateTxt.requestFocus();
                     return;
+                }
+            }
+        });
+
+        bmiTxt.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                super.focusGained(e);
+
+                // Fill up the BMI input with the calculated value
+                if(bmiTxt.getText().length()==0) {
+                        //&& (weightTxt.getText().length()!=0) && (heightTxt.getText().length()!=0)
+
                 }
             }
         });
