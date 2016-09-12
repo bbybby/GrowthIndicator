@@ -41,6 +41,7 @@ public class RequestPage extends JFrame{
     private JLabel resultTxt;
     private JCheckBox calculateByDayCkBox;
     private JButton changeDateBtn;
+    private JLabel markTxt;
 
     private DataManager dm;
     private ResultView rv;
@@ -84,7 +85,6 @@ public class RequestPage extends JFrame{
         setContentPane(mainPanel);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         pack();
-        setLocationRelativeTo(null);
     }
 
     // initialize variables and the objects
@@ -103,6 +103,9 @@ public class RequestPage extends JFrame{
             Utils.showMessage("Data loading failed!");
             Utils.LOGGER.log(Level.SEVERE, "File reading failed.");
         }
+
+        // Copyright message
+        markTxt.setText(Params.COPYRIGHT);
     }
 
     // Returns valid input otherwise returns ERROR CODE
@@ -168,11 +171,10 @@ public class RequestPage extends JFrame{
                 if(val == Params.ERROR_CODE) return;
                 else bmi = val;
 
-                // Fill up the BMI value with weight & height if it has no input
+                // Calculate BMI value with weight & height if it has no bmi input
                 if(bmi == Params.INIT_VAL) {
                     if((weight!=Params.INIT_VAL) && (height!=Params.INIT_VAL)) {
                         bmi = Math.round(weight/(float)Math.pow(height/100, 2)*100f)/100f;
-                        bmiTxt.setText(Float.toString(bmi));
                     }
                 }
 
