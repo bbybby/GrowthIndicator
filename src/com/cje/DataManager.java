@@ -123,7 +123,7 @@ public class DataManager {
         GrowthInfo gi = map.get(String.valueOf(medianMonthKey));
         GrowthInfo gi_neighbor = null;
         GrowthInfo gi_result  = null;
-        int keyDays = (int)medianMonthKey*30;
+        int keyDays = (int)(medianMonthKey*30f);
 
         if(gi == null) {    // We don't need to go further
             return null;
@@ -169,7 +169,7 @@ public class DataManager {
         float x1 = gi.getAge() * 30;    // key age by days of gi
         float x2 = gi_neighbor.getAge() * 30;   // key age by days of gi_neighbor
 
-        age = Math.round(((float)ageByDay/30)*10)/10;
+        age = Math.round(((float)ageByDay/30)*10)/10f;
         l = Utils.getApproximateValue(x1, gi.getL(), x2, gi_neighbor.getL(), ageByDay);
         m = Utils.getApproximateValue(x1, gi.getM(), x2, gi_neighbor.getM(), ageByDay);
         s = Utils.getApproximateValue(x1, gi.getS(), x2, gi_neighbor.getS(), ageByDay);

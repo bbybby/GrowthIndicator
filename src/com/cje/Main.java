@@ -14,7 +14,7 @@ public class Main {
         mainFrm.initialize();
         mainFrm.addListeners();
         mainFrm.setTitle("GrowthIndicator Ver. " + Params.VERSION);
-        mainFrm.setSize(800, 740);
+        mainFrm.setSize(800, 745);
         mainFrm.setLocationRelativeTo(null);
         mainFrm.setVisible(true);
     }
