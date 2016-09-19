@@ -3,8 +3,8 @@
 
     Developed by Jieun Choi
     Date : 2016.7.18.
-    Last Update : 2016. 8. 8.
-    version : 0.9 Beta
+    Last Update : 2016. 9. 19.
+    version : 1.0
     Required environment : Java Runtime Environment jre 1.8 (or higher version)
 
 ## Program Requirements
